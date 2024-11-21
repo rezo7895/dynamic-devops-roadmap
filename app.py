@@ -77,4 +77,6 @@ def is_recent(timestamp):
 
 if __name__ == "__main__":
     # Run the Flask application
+    print("Available routes:")
+    print(app.url_map)
     app.run(host="0.0.0.0", port=5000)
