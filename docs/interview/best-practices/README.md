@@ -19,7 +19,12 @@ sidebar_position: 2
   - Focus on impact before what you just did. Focus on the accomplishments instead of the responsibilities.
   - It's good to write in the footer of your CV when the last update was.
   - There is no need to add unnecessary information about you, like age, marital status, etc.
+<<<<<<< HEAD
   Unless otherwise requested, always export and send your CV in PDF format so it always appears the same way for everybody.
+=======
+  - Unless otherwise requested, always export and send your CV in PDF format so it always appears the same way for everybody.
+  - Finally, ensure that your CV is readable for humans and machines (check score for ATS, Applicant Tracking System), as you don't know who will read it (**you could be easily filtered because you don't pass the initial screening**).
+>>>>>>> 356e84f96da255db0fc5f878ecdbd39d8d72130d
  - **Cover Letter:**
    - The cover letter is usually optional, but post it anyway when applying for the job. Why would you lose a plus point?
    - Unlike the CV, which doesn't need to be changed much across job applications, the cover letter should be tailored for each application! Don't copy/paste your cover letter as it is every time!
