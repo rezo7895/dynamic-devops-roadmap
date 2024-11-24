@@ -1,8 +1,8 @@
 import unittest
 from unittest.mock import patch
-from flask import Flask
 import app as flask_app  # Import the Flask app from the code above
 import requests
+
 
 class TestFlaskApp(unittest.TestCase):
     def setUp(self):
@@ -22,7 +22,8 @@ class TestFlaskApp(unittest.TestCase):
 
     @patch("app.requests.get")
     @patch("app.current_timezone_utc")
-    def test_temperature_endpoint(self, mock_current_timezone, mock_requests_get):
+    def test_temperature_endpoint(self, mock_current_timezone, 
+                                  mock_requests_get):
         """
         Test the /temperature endpoint with mocked data.
         """
@@ -36,9 +37,12 @@ class TestFlaskApp(unittest.TestCase):
             [{"value": "21.5"}],  # Third SenseBox
         ]
         mock_requests_get.side_effect = [
-            unittest.mock.Mock(status_code=200, json=lambda: mock_response_data[0]),
-            unittest.mock.Mock(status_code=200, json=lambda: mock_response_data[1]),
-            unittest.mock.Mock(status_code=200, json=lambda: mock_response_data[2]),
+            unittest.mock.Mock(status_code=200, 
+                               json=lambda: mock_response_data[0]),
+            unittest.mock.Mock(status_code=200, 
+                               json=lambda: mock_response_data[1]),
+            unittest.mock.Mock(status_code=200, 
+                               json=lambda: mock_response_data[2]),
         ]
 
         response = self.client.get('/temperature')
@@ -51,12 +55,14 @@ class TestFlaskApp(unittest.TestCase):
         Test the /temperature endpoint when an API call fails.
         """
         # Mock a failure in the API call
-        mock_requests_get.side_effect = requests.RequestException("API failure")
+        mock_requests_get.side_effect = requests.RequestException(
+            "API failure")
 
         response = self.client.get('/temperature')
         self.assertEqual(response.status_code, 500)
         self.assertIn("error", response.json)
         self.assertEqual(response.json["error"], "Failed to fetch data")
+
 
 if __name__ == "__main__":
     unittest.main()
