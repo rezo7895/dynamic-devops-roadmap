@@ -1,5 +1,5 @@
 """
-This Program contains print the current application version and average 
+This Program contains print the current application version and average
 temperature accross SenseBoxIDs through flask and exit the program.
 """
 from datetime import timezone, timedelta
@@ -10,7 +10,7 @@ from flask import Flask, jsonify
 
 def current_timezone_utc():
     '''
-    Function get date 1 hour earlier of current timestamp in utc timezone 
+    Function get date 1 hour earlier of current timestamp in utc timezone
     '''
     dt = datetime.datetime.now(timezone.utc)
     dt = dt - timedelta(hours=1)

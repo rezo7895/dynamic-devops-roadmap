@@ -22,7 +22,7 @@ class TestFlaskApp(unittest.TestCase):
 
     @patch("app.requests.get")
     @patch("app.current_timezone_utc")
-    def test_temperature_endpoint(self, mock_current_timezone, 
+    def test_temperature_endpoint(self, mock_current_timezone,
                                   mock_requests_get):
         """
         Test the /temperature endpoint with mocked data.
@@ -37,11 +37,11 @@ class TestFlaskApp(unittest.TestCase):
             [{"value": "21.5"}],  # Third SenseBox
         ]
         mock_requests_get.side_effect = [
-            unittest.mock.Mock(status_code=200, 
+            unittest.mock.Mock(status_code=200,
                                json=lambda: mock_response_data[0]),
-            unittest.mock.Mock(status_code=200, 
+            unittest.mock.Mock(status_code=200,
                                json=lambda: mock_response_data[1]),
-            unittest.mock.Mock(status_code=200, 
+            unittest.mock.Mock(status_code=200,
                                json=lambda: mock_response_data[2]),
         ]
 
