@@ -2,7 +2,7 @@ name: CI
 on:
   push:
     branches:
-      - phase1
+      - ali
 jobs:
   lint:
     runs-on: ubuntu-22.04
