@@ -1,0 +1,28 @@
+name: CI
+on:
+  push:
+    branches:
+      - phase1
+jobs:
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v3
+    - name: call python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.8'
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+    - name: Lint Python code
+      run: |
+            pip install flake8
+            flake8 .
+    - name: Install Hadolint
+      run: |
+          wget -qO- https://github.com/hadolint/hadolint/releases/download/v2.10.0/hadolint-Linux-x86_64 -O /usr/local/bin/hadolint
+          chmod +x /usr/local/bin/hadolint
+    - name: Lint Dockerfile
+      run: hadolint Dockerfile
