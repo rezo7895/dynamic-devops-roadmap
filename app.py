@@ -42,9 +42,13 @@ def temperature_edpoint():
             "from-date": from_date,
             "format": "json"
         }
-        response=requests.get(base_url, params=params)
-        data=response.json()
-        temperature[i]=data
+        try:
+            response=requests.get(base_url, params=params)
+            response.raise_for_status()
+            data=response.json()
+            temperature[i]=data
+        except requests.RequestException as e:
+            return jsonify({"error": "Failed to fetch data", "details": str(e)}), 500
     for i in temperature:
         avg_temp.append(float(temperature[i][0]["value"]))
     avg=sum(avg_temp)/len(avg_temp)
