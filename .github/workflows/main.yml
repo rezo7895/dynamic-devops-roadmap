@@ -52,5 +52,15 @@ jobs:
           pip install -r requirements.txt
     - name: run unit tests
       run: python app_test.py
+  Security_fixes:
+    needs: unit_test
+    runs-on: ubuntu-22.04
+    steps:          
+    - name: Checkout the code
+      uses: actions/checkout@v3       
+    - name: OSSF Scorecard action        
+      uses: ossf/scorecard-action@v2.4.0
+      with:
+        results_file: results_format.json
 
       
