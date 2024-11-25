@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - ali
+      - osama
 jobs:
   lint:
     runs-on: ubuntu-22.04
