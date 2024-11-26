@@ -19,7 +19,7 @@ def current_timezone_utc():
 # Application version
 
 
-VERSION = "v0.0.2"
+VERSION = "v0.0.1"
 # Flask app initialization
 app = Flask(__name__)
 
