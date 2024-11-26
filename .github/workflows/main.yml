@@ -55,7 +55,7 @@ jobs:
       run: |
         value="version":"v0.0.2"
         echo "sleep 10 secods waiting for flask to start"
-        sleep 10
+        
         response=$(curl -s http://localhost:5000/version)
         if [ "$response" != "$value" ]; then
         echo "Unexpected response: $response. Expected: $value."
