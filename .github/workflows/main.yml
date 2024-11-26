@@ -59,6 +59,7 @@ jobs:
         response=$(curl -s http://localhost:5000/version)
         if [ "$response" != "$value" ]; then
         echo "Unexpected response: $response. Expected: $value."
+        exit 1
         fi
         echo "Endpoint returned the correct response: $value"
   unit_test:
