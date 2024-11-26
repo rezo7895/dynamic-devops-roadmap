@@ -53,7 +53,7 @@ jobs:
         docker run -d -p 5000:5000 app
     - name: Test /version Endpoint
       run: |
-        VERSION=$(grep 'VERSION =' app.py | sed "s/.*VERSION = '\(.*\)'/\1/")
+        VERSION=$(grep 'VERSION =' app.py | sed "s/.*VERSION = '\(.*\)'/\1/")        
         value="{\"version\":\"$VERSION\"}"
         echo "sleep 10 Seconds waiting for flask to start"
         sleep 10
