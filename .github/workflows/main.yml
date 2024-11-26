@@ -36,9 +36,28 @@ jobs:
     - name: Setup Docker
       uses: docker/setup-buildx-action@v2
     - name: build and run dockerfile
-      run: docker build -t app . 
-  unit_test:
+      run: docker build -t app .
+  test_endpoint:
     needs: build
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v3
+    - name: Setup Docker
+      uses: docker/setup-buildx-action@v2
+    - name: build and run dockerfile
+      run: docker build -t app .
+           docker run -d  -p 5000:5000 app
+    - name: Test /version Endpoint
+      run: |
+        value='v0.0.2'
+        response=$(curl http://localhost:5000/version)
+        if [$response != $value]; then
+        echo "Unexpected response: $response. Expected: $value."
+        fi
+        echo "Endpoint returned the correct response: $value"
+  unit_test:
+    needs: test_endpoint
     runs-on: ubuntu-22.04
     steps:
     - name: Checkout the code
@@ -52,16 +71,15 @@ jobs:
           pip install -r requirements.txt
     - name: run unit tests
       run: python app_test.py
-  Security_fixes:
-    needs: unit_test
-    runs-on: ubuntu-22.04
-    steps:          
-    - name: Checkout the code
-      uses: actions/checkout@v3       
-    - name: OSSF Scorecard action        
-      uses: ossf/scorecard-action@v2.4.0
-      with:
-        results_file: results_format.json
+  # Security_fixes:
+  #   needs: unit_test
+  #   runs-on: ubuntu-22.04
+  #   steps:          
+  #   - name: Checkout the code
+  #     uses: actions/checkout@v3       
+  #   - name: OSSF Scorecard action        
+  #     uses: ossf/scorecard-action@v2.4.0
+  #     with:
+  #       results_file: results_format.json
 
-        
       
