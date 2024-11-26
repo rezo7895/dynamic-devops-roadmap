@@ -54,7 +54,7 @@ jobs:
     - name: Test /version Endpoint
       run: |
         VERSION=$(grep 'VERSION =' app.py | sed "s/.*VERSION = '\(.*\)'/\1/")
-        value='{\"version\":\"$VERSION\"}'
+        value="{\"version\":\"$VERSION\"}"
         echo "sleep 10 Seconds waiting for flask to start"
         sleep 10
         response=$(curl -s http://localhost:5000/version)
