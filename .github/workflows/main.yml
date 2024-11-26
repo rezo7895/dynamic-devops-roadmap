@@ -53,9 +53,9 @@ jobs:
         docker run -d -p 5000:5000 app
     - name: Test /version Endpoint
       run: |
-        value='v0.0.2'
+        value="v0.0.2"
         response=$(curl -s http://localhost:5000/version)
-        if [$response != $value]; then
+        if ["$response" != "$value"]; then
         echo "Unexpected response: $response. Expected: $value."
         fi
         echo "Endpoint returned the correct response: $value"
