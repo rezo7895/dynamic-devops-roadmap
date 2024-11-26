@@ -55,7 +55,7 @@ jobs:
       run: |
         VERSION=$(grep -oP 'VERSION = "\K[^\"]+' app.py)  
         echo "VERSION extracted: $VERSION"
-        value='{"version":"$VERSION"}'
+        value='{"version":\"$VERSION\"}'
         echo "Expected value: $value"
         echo "sleep 10 Seconds waiting for flask to start"
         sleep 10
