@@ -54,9 +54,7 @@ jobs:
     - name: Test /version Endpoint
       run: |
         VERSION=$(grep -oP 'VERSION = "\K[^\"]+' app.py)  
-        echo "VERSION extracted: $VERSION"
-        value='{"version":\"$VERSION\"}'
-        echo "Expected value: $value"
+        value="{\"version\":\"$VERSION\"}"
         echo "sleep 10 Seconds waiting for flask to start"
         sleep 10
         response=$(curl -s http://localhost:5000/version)
