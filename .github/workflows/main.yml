@@ -57,15 +57,14 @@ jobs:
         echo "VERSION extracted: $VERSION"
         value="{\"version\":\"$VERSION\"}"
         echo "Expected value: $value"
-
-        # echo "sleep 10 Seconds waiting for flask to start"
-        # sleep 10
-        # response=$(curl -s http://localhost:5000/version)
-        # if [ "$response" != "$value" ]; then
-        # echo "Unexpected response: $response. Expected: $value."
-        # exit 1
-        # fi
-        # echo "Endpoint returned the correct response: $value"
+        echo "sleep 10 Seconds waiting for flask to start"
+        sleep 10
+        response=$(curl -s http://localhost:5000/version)
+        if [ "$response" != "$value" ]; then
+        echo "Unexpected response: $response. Expected: $value."
+        exit 1
+        fi
+        echo "Endpoint returned the correct response: $value"
   unit_test:
     needs: test_endpoint
     runs-on: ubuntu-22.04
