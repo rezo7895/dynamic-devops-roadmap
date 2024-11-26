@@ -54,7 +54,7 @@ jobs:
     - name: Test /version Endpoint
       run: |
         VERSION=$(sed "s/.*VERSION = '\(.*\)'/\1/")
-        echo $VERSION
+        echo '$VERSION'
         value='{"version":"$VERSION"}'
         echo "sleep 10 Seconds waiting for flask to start"
         sleep 10
