@@ -54,7 +54,7 @@ jobs:
     - name: Test /version Endpoint
       run: |
         value='v0.0.2'
-        response=$(curl http://localhost:5000/version)
+        response=$(curl -s http://localhost:5000/version)
         if [$response != $value]; then
         echo "Unexpected response: $response. Expected: $value."
         fi
