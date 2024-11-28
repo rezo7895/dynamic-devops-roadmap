@@ -1,19 +1,28 @@
 """
-This Program provides endpoints to fetch the application version 
-and current average temperature using Flask.
+This Program contains print the current application version and average
+temperature accross SenseBoxIDs through flask and exit the program.
 """
-import os
+from datetime import timezone, timedelta
+import datetime
 import requests
 from flask import Flask, jsonify
 
-# Application version
-VERSION = "v0.0.2"
 
+def current_timezone_utc():
+    '''
+    Function get date 1 hour earlier of current timestamp in utc timezone
+    '''
+    dt = datetime.datetime.now(timezone.utc)
+    dt = dt - timedelta(hours=1)
+    formatted_timestamp = dt.strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
+    return formatted_timestamp
+# Application version
+
+
+VERSION = "v0.0.2"
 # Flask app initialization
 app = Flask(__name__)
 
-# OpenSenseMap API base URL
-OPENSENSEMAP_API_URL = "https://api.opensensemap.org/boxes"
 
 @app.route("/version", methods=["GET"])
 def version_endpoint():
@@ -21,62 +30,41 @@ def version_endpoint():
     Endpoint to return the application version.
     """
     # Use the environment variable for version or fallback to default
-    app_version = os.getenv("APP_VERSION", VERSION)
-    return jsonify({"version": app_version})
+    return jsonify({"version": VERSION})
 
 
 @app.route("/temperature", methods=["GET"])
-def temperature_endpoint():
+def temperature_edpoint():
     """
-    Endpoint to return the current average temperature based on senseBox data.
-    Data must be no older than 1 hour.
+    Endpoint to return the average temperature based on all sensebox Data
     """
-    try:
-        # Fetch data from openSenseMap API
-        response = requests.get(OPENSENSEMAP_API_URL)
-        response.raise_for_status()
-        boxes = response.json()
-
-        # Filter temperature data within the last hour
-        temperatures = []
-        for box in boxes:
-            for sensor in box.get("sensors", []):
-                if "temperature" in sensor.get("title", "").lower():
-                    last_measurement = sensor.get("lastMeasurement")
-                    if last_measurement:
-                        # Extract the value and check its age
-                        value = float(last_measurement.get("value", 0))
-                        timestamp = last_measurement.get("createdAt")
-                        if is_recent(timestamp):
-                            temperatures.append(value)
-
-        # Calculate the average temperature
-        if temperatures:
-            avg_temperature = sum(temperatures) / len(temperatures)
-            return jsonify({"average_temperature": avg_temperature})
-        else:
-            return jsonify({"error": "No recent temperature data found"}), 404
-
-    except requests.RequestException as e:
-        return jsonify({"error": "Failed to fetch data", "details": str(e)}), 500
-
-
-def is_recent(timestamp):
-    """
-    Helper function to check if a timestamp is within the last hour.
-    """
-    from datetime import datetime, timedelta
-
-    try:
-        timestamp_dt = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
-        one_hour_ago = datetime.utcnow() - timedelta(hours=1)
-        return timestamp_dt >= one_hour_ago
-    except ValueError:
-        return False
-
+    from_date = current_timezone_utc()
+    base_url = "https://api.opensensemap.org/boxes/data"
+    temperature = {}
+    avg_temp = []
+    sensebox_ids = ["5c21ff8f919bf8001adf2488",
+                    "5eb99cacd46fb8001b2ce04c",
+                    "5e60cf5557703e001bdae7f8"]
+    for i in sensebox_ids:
+        params = {
+            "boxId": i,
+            "phenomenon": "Temperatur",
+            "from-date": from_date,
+            "format": "json"
+        }
+        try:
+            response = requests.get(base_url, params=params)
+            response.raise_for_status()
+            data = response.json()
+            temperature[i] = data
+        except requests.RequestException as e:
+            return jsonify({"error": "Failed to fetch data",
+                            "details": str(e)}), 500
+    for i in temperature:
+        avg_temp.append(float(temperature[i][0]["value"]))
+    avg = sum(avg_temp)/len(avg_temp)
+    return jsonify({"Average_Temperature":  f"{avg:.3f}"})
 
 if __name__ == "__main__":
     # Run the Flask application
-    print("Available routes:")
-    print(app.url_map)
     app.run(host="0.0.0.0", port=5000)
