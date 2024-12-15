@@ -5,6 +5,7 @@ temperature accross SenseBoxIDs through flask and exit the program.
 from datetime import timezone, timedelta
 import datetime
 import requests
+import os
 from flask import Flask, jsonify
 
 
@@ -42,9 +43,14 @@ def temperature_edpoint():
     base_url = "https://api.opensensemap.org/boxes/data"
     temperature = {}
     avg_temp = []
-    sensebox_ids = ["5c21ff8f919bf8001adf2488",
-                    "5eb99cacd46fb8001b2ce04c",
-                    "5e60cf5557703e001bdae7f8"]
+    sensebox_ids = os.getenv(
+        "SENSEBOX_IDS",
+        (
+            "5c21ff8f919bf8001adf2488, "
+            "5eb99cacd46fb8001b2ce04c, "
+            "5e60cf5557703e001bdae7f8"
+        )
+        ).split(",")
     for i in sensebox_ids:
         params = {
             "boxId": i,
