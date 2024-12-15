@@ -47,7 +47,8 @@ class TestFlaskApp(unittest.TestCase):
 
         response = self.client.get('/temperature')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json, {"Average_Temperature": "22.333"})
+        self.assertEqual(response.json, {"Average_Temperature": "22.333",
+                                         "Status": "Good"})
 
     @patch("app.requests.get")
     def test_temperature_endpoint_api_failure(self, mock_requests_get):
