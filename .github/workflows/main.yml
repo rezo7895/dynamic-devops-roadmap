@@ -50,7 +50,7 @@ jobs:
         docker compose build 
     - name: Run container
       run:
-        docker compose up
+        docker compose up -d
     - name: Test /version Endpoint
       run: |
         VERSION=$(grep -oP 'VERSION = "\K[^\"]+' app.py)  
