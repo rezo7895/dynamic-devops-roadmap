@@ -4,9 +4,12 @@ temperature accross SenseBoxIDs through flask and exit the program.
 """
 from datetime import timezone, timedelta
 import datetime
-import requests
 import os
+import time
+import requests
 from flask import Flask, jsonify
+from prometheus_client import Counter, Histogram, make_wsgi_app
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
 
 def current_timezone_utc():
@@ -25,12 +28,47 @@ VERSION = "v0.0.2"
 app = Flask(__name__)
 
 
+# REQUEST_COUNT = Counter(
+#     'app_requests_total', 'Total HTTP requests', ['method', 'endpoint']
+#     )
+
+
+# @app.before_request
+# def before_request():
+#     REQUEST_COUNT.labels(method=request.method, endpoint=request.path).inc()
+
+
+# @app.route("/metrics", methods=["GET"])
+# def metrics_endpoint():
+#     """
+#     Endpoint to expose Prometheus metrics.
+#     """
+#     return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
+
+app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
+    '/metrics': make_wsgi_app()
+})
+REQUEST_COUNT = Counter(
+    'app_request_count',
+    'Application Request Count',
+    ['method', 'endpoint', 'http_status']
+)
+REQUEST_LATENCY = Histogram(
+    'app_request_latency_seconds',
+    'Application Request Latency',
+    ['method', 'endpoint']
+)
+
+
 @app.route("/version", methods=["GET"])
 def version_endpoint():
     """
     Endpoint to return the application version.
     """
     # Use the environment variable for version or fallback to default
+    start_time = time.time()
+    REQUEST_COUNT.labels('GET', '/', 200).inc()
+    REQUEST_LATENCY.labels("GET", "/").observe(time.time() - start_time)
     return jsonify({"version": VERSION})
 
 
@@ -39,6 +77,9 @@ def temperature_edpoint():
     """
     Endpoint to return the average temperature based on all sensebox Data
     """
+    start_time = time.time()
+    REQUEST_COUNT.labels('GET', '/', 200).inc()
+    REQUEST_LATENCY.labels("GET", "/").observe(time.time() - start_time)
     from_date = current_timezone_utc()
     base_url = "https://api.opensensemap.org/boxes/data"
     temperature = {}

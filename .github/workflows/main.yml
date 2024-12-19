@@ -36,7 +36,7 @@ jobs:
     - name: Setup Docker
       uses: docker/setup-buildx-action@v2
     - name: build and run dockerfile
-      run: docker build -t app .
+      run: docker compose build 
   test_endpoint:
     needs: build
     runs-on: ubuntu-22.04
@@ -47,10 +47,10 @@ jobs:
       uses: docker/setup-buildx-action@v2
     - name: build and run dockerfile
       run: 
-        docker build -t app .
+        docker compose build 
     - name: Run container
       run:
-        docker run -d -p 5000:5000 app
+        docker compose up
     - name: Test /version Endpoint
       run: |
         VERSION=$(grep -oP 'VERSION = "\K[^\"]+' app.py)  
