@@ -100,4 +100,5 @@ jobs:
         docker tag hivebox ghcr.io/rezo7895/hivebox:$IMAGE_TAG
         docker push ghcr.io/rezo7895/hivebox:$IMAGE_TAG
 
+
         
