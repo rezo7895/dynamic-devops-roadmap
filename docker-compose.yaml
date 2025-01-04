@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    image: Hivebox
+    image: hivebox
     build:
       context: .
       dockerfile: Dockerfile

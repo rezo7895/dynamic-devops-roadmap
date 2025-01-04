@@ -46,8 +46,8 @@ jobs:
           docker compose build
     - name: Tag and Push Docker Images
       run: | 
-        docker tag Hivebox ghcr.io/rezo7895/Hivebox:$(date +%s)
-        docker push ghcr.io/rezo7895/Hivebox:$(date +%s)
+        docker tag hivebox ghcr.io/rezo7895/hivebox:$(date +%s)
+        docker push ghcr.io/rezo7895/hivebox:$(date +%s)
   Test_endpoint:
     needs: Build
     runs-on: ubuntu-22.04
