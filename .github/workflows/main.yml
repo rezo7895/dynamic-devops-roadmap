@@ -48,18 +48,31 @@ jobs:
       run: | 
         docker tag hivebox ghcr.io/rezo7895/hivebox:$(date +%s)
         docker push ghcr.io/rezo7895/hivebox:$(date +%s)
+
+
+
+
+
+
+
+
+
+
+
   Test_endpoint:
     needs: Build
     runs-on: ubuntu-22.04
     steps:
     - name: Checkout the code
       uses: actions/checkout@v3
-    - name: Setup Docker
-      uses: docker/setup-buildx-action@v2
-    - name: build and run dockerfile
-      run: |
-
-        docker compose build 
+    # - name: Setup Docker
+    #   uses: docker/setup-buildx-action@v2
+    - name: Pull Docker Image
+      run: | 
+        docker pull ghcr.io/rezo7895/hivebox:$(date +%s)
+    # - name: build and run dockerfile
+    #   run: 
+    #     docker compose build 
     - name: Run container
       run:
         docker compose up -d
