@@ -64,7 +64,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Pull Docker Image
       run: | 
-        docker pull ghcr.io/rezo7895/hivebox:$GITHUB_ENV
+        docker pull ghcr.io/rezo7895/hivebox:$IMAGE_TAG
     - name: Run container
       run:
         docker compose up -d
