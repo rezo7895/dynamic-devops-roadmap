@@ -76,8 +76,8 @@ jobs:
     - name: Install dependencies
       run: |
           pip install -r requirements.txt
-    - name: run unit tests
-      run: python app_test.py
+    - name: run tests
+      run: pytest
   # Security_fixes:
   #   needs: unit_test
   #   runs-on: ubuntu-22.04

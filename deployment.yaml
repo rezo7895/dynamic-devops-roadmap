@@ -19,6 +19,7 @@ spec:
         image: aliyasser98/hivebox:latest
         ports:
         - containerPort: 5000
+        - containerPort: 9090
         resources:
           limits:
             cpu: "100m"
@@ -37,9 +38,15 @@ spec:
     app: python
   ports:
     - protocol: TCP
+      name: port1
       port: 5000
       targetPort: 5000
       nodePort: 30000
+    - protocol: TCP
+      name: port2
+      port: 9090
+      targetPort: 9090
+      nodePort: 30001
   type: NodePort
 ---
 apiVersion: networking.k8s.io/v1
@@ -61,6 +68,13 @@ spec:
             port:
               number: 5000
       - path: /temperature
+        pathType: Prefix
+        backend:
+          service:
+            name: app-service
+            port:
+              number: 5000
+      - path: /metrics
         pathType: Prefix
         backend:
           service:

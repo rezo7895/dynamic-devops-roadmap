@@ -27,24 +27,6 @@ VERSION = "v0.0.2"
 # Flask app initialization
 app = Flask(__name__)
 
-
-# REQUEST_COUNT = Counter(
-#     'app_requests_total', 'Total HTTP requests', ['method', 'endpoint']
-#     )
-
-
-# @app.before_request
-# def before_request():
-#     REQUEST_COUNT.labels(method=request.method, endpoint=request.path).inc()
-
-
-# @app.route("/metrics", methods=["GET"])
-# def metrics_endpoint():
-#     """
-#     Endpoint to expose Prometheus metrics.
-#     """
-#     return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
-
 app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
     '/metrics': make_wsgi_app()
 })
@@ -73,7 +55,7 @@ def version_endpoint():
 
 
 @app.route("/temperature", methods=["GET"])
-def temperature_edpoint():
+def temperature_endpoint():
     """
     Endpoint to return the average temperature based on all sensebox Data
     """
