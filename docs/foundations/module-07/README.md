@@ -2,23 +2,30 @@
 title: "Module 7: Capstone Project"
 sidebar_label: "7. Capstone Project"
 description: "Self-driven project to put everything together and create an industry-grade project which includes defining the requirements gathering, setting the plan, implementation, and review"
+toc_max_heading_level: 2
 ---
 
 [🗂 Back to the Roadmap Index](../../getting-started#roadmap-index)
 
 <p align="center">
-  <img alt="Module Overview" border="0" width="90%" src={require('./module-07-overview.png').default} />
+  <img class="module-overview-image" alt="Module Overview" border="0" width="90%" src={require('./module-07-overview.png').default} />
 </p>
+
+## Module Overview
 
 If you reached this point and finished all the previous modules, congratulations! You already did a great job! You passed through many parts of the DevOps ecosystem and even finished the end-to-end hands-on guided project, [HiveBox](../../projects/hivebox/) (if you didn't, you should finish it first).
 
 The capstone project will be a bit different, where you will do everything from A to Z, where you will come up with the project idea, define the `requirements,` set the `plan,` work on the `implementation,` and `review` the outcome.
 
+Focus areas: Requirements (20%), Planning (15%), Implementation (40%), Review (25%).
+
 :::warning
 Unlike the [HiveBox project](../../projects/hivebox/) where pairing is recommended, this **capstone project cannot be done without pairing!** You should do it with someone more experienced than you.
 :::
 
-This project should follow the same MVP approach and work in phases and always remember ... **Make it work, then make it right, then make it fast!**
+:::tip
+This project should follow the same MVP approach and work in phases and always remember ... **Make it work, make it right, then make it fast!**
+:::
 
 ## 7.1 Requirements
 
@@ -51,6 +58,6 @@ This project should follow the same MVP approach and work in phases and always r
 - Conduct a final retrospective and identify future work.
 - Write the takeaways of the project.
 
-## Interview Questions - Module 7
+## Interview Questions
 
 Review the interview questions related to [Module 7](../../interview/common-questions#module-7).

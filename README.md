@@ -13,7 +13,9 @@
   </a>
 </p>
 
-[Dynamic DevOps Roadmap](https://devopsroadmap.io/) is a **FREE** pragmatic plan to kickstart your DevOps Engineer career in the Cloud Native era following the Agile MVP style!
+[Dynamic DevOps Roadmap](https://devopsroadmap.io/) is a **FREE** pragmatic DevOps roadmap to kickstart your DevOps career in the Cloud Native era following the Agile MVP style!
+
+> Experience-Driven DevOps: Beyond Tools, Where Concepts Meet Real-World Challenges
 
 Unlike many other roadmaps, this roadmap is **effective**, **impactful**, and most importantly **feasible** because it takes a different approach following 3 principles:
 
@@ -25,6 +27,13 @@ Unlike many other roadmaps, this roadmap is **effective**, **impactful**, and mo
 ## Give it a Star! ⭐
 
 If you like this project, please [give it a star](#top) on GitHub for better visibility. Thanks!
+
+</br>
+<p align="center">
+  <a href="https://devopsroadmap.io/getting-started/" imageanchor="1">
+    <img src="https://img.shields.io/badge/Get_Started_Now-559e11?style=for-the-badge&logo=Vercel&logoColor=white" />
+  </a>
+</p>
 
 <!-- omit from toc -->
 ## Table of Contents
@@ -98,7 +107,7 @@ This roadmap is `polymorphic`, which means it's designed to work in different mo
 
 <p align="center">
   <a href="https://devopsroadmap.io/getting-started/" imageanchor="1">
-    <img alt="Dynamic DevOps Roadmap Flow" border="0" width="90%" src="static/img/dynamic-devops-roadmap-flow.png" />
+    <img title="Dynamic DevOps Roadmap" alt="Dynamic DevOps Roadmap Modules" border="0" width="90%" src="static/img/dynamic-devops-roadmap-modules.png" />
   </a>
 </p>
 
@@ -114,4 +123,4 @@ This roadmap is `polymorphic`, which means it's designed to work in different mo
 
 ## License
 
-Dynamic DevOps Roadmap by [DevOps Hive](https://devopshive.net/) and under the open-source license, [Creative Commons  Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/). For more details, please review [LICENSE](LICENSE).
+Dynamic DevOps Roadmap by [DevOps Hive](https://devopshive.net/) and under the open-source license, [Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/). For more details, please review [LICENSE](LICENSE).

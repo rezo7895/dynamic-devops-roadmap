@@ -2,13 +2,27 @@
 title: "Module 4: Expand - Constructing a Shell"
 sidebar_label: "4. Expand - Constructing a Shell"
 description: "Review goals in planning, then apply the Twelve-Factor App methodology and REST API best practices. Embrace Kubernetes for container orchestration. Then explore observability, dive into continuous delivery solutions, also an overview of Cloud Computing — and finally, a hands-on with the HiveBox project"
+toc_max_heading_level: 2
 ---
+
+import Quiz from '@site/src/components/Quiz';
+import QuizData from './module-04-quiz.json';
 
 [🗂 Back to the Roadmap Index](../../getting-started#roadmap-index)
 
 <p align="center">
-  <img alt="Module Overview" border="0" width="90%" src={require('./module-04-overview.png').default} />
+  <img class="module-overview-image" alt="Module Overview" border="0" width="90%" src={require('./module-04-overview.png').default} />
 </p>
+
+## Module Overview
+
+- Review goals in planning and requirements.
+- Apply the Twelve-Factor App methodology and REST API best practices.
+- Discover Kubernetes for container orchestration, Cloud Computing, and Cloud Native Applications.
+- Explore observability and its pillars.
+- Apply Continuous Integration best practices and dive into Continuous Delivery solutions.
+- Implement the progressive hands-on project, HiveBox phase 4.
+- Focus areas: Planning (12.5%), Code (25%), Containers (12.5%), Observability (12.5%), Continuous Integration and Continuous Delivery (25%), Infrastructure (12.5%).
 
 ## 4.1 Planning - Review the Goals and Requirements
 
@@ -120,7 +134,7 @@ description: "Review goals in planning, then apply the Twelve-Factor App methodo
   - Scalability and modularity are supported efficiently.
 - Kubernetes has become the *de facto* standard for container orchestration and is widely adopted in private and public sectors. According to a survey by the [Cloud Native Computing Foundation (CNCF) 2023](https://www.cncf.io/reports/cncf-annual-survey-2023/), **66% of consumers were using Kubernetes in production** and **18% were evaluating it** (84% total).
 
-<img class="img-right img-round-corners" align="right" width="40%" src={require('./4.5-kubernetes-core-concepts.png').default} ></img>
+<img title="Kubernetes Core Concepts" alt="Kubernetes Core Concepts" class="img-right img-round-corners" align="right" width="40%" src={require('./4.5-kubernetes-core-concepts.png').default} ></img>
 
 - Let's have a quick overview about Containers, Docker, and Kubernetes Containers:
   - **Containers:** Technology for packaging an application and its Docker runtime dependencies.
@@ -200,10 +214,14 @@ description: "Review goals in planning, then apply the Twelve-Factor App methodo
 - [What Is Cloud Computing? - AWS](https://aws.amazon.com/what-is-cloud-computing/)
 - [What is Cloud Native? - AWS](https://aws.amazon.com/what-is/cloud-native/)
 
-## Project - HiveBox Phase 4
+## Quiz
+
+<Quiz data={QuizData}/>
+
+## Hands-on
 
 Follow the instructions in the [HiveBox project phase 4](../../projects/hivebox#phase-4).
 
-## Interview Questions - Module 4
+## Interview Questions
 
 Review the interview questions related to [Module 4](../../interview/common-questions#module-4).

@@ -5,12 +5,16 @@
   width: 100%;
 }
 
-.featureSvg {
-  height: 200px;
-  width: 200px;
-}
-
 .featuresHeader {
   text-align: center;
   padding-top: 2rem;
+}
+
+.featuresList {
+  line-height: 2rem;
+}
+
+.featuresList li {
+  margin: 0 0 0.5rem 0;
+  padding-left: 0.4rem;
 }

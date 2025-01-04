@@ -3,15 +3,26 @@ title: "Module 6: Optimize - Keep Improving"
 sidebar_label: "6. Optimize - Keep Improving"
 description: "Conduct Agile retrospective to analyze the improvement areas, optimize code performance, and secure the software supply chain. Then, implement a multi-environment architecture with a log aggregation system for observability. Also, set up end-to-end release automation, explore continuous deployment with GitOps and Argo CD — and finally, a hands-on with the HiveBox project"
 image: /img/reconciliation-loop.png
+toc_max_heading_level: 2
 ---
 
-**Work in progress.**
+import Quiz from '@site/src/components/Quiz';
+import QuizData from './module-06-quiz.json';
 
 [🗂 Back to the Roadmap Index](../../getting-started#roadmap-index)
 
 <p align="center">
-  <img alt="Module Overview" border="0" width="90%" src={require('./module-06-overview.png').default} />
+  <img class="module-overview-image" alt="Module Overview" border="0" width="90%" src={require('./module-06-overview.png').default} />
 </p>
+
+## Module Overview
+
+- Conduct Agile retrospectives to analyze the improvement areas.
+- Optimize code performance and secure the software supply chain.
+- Implement a multi-environment architecture with a log aggregation system for observability.
+- Set up end-to-end release automation and explored continuous deployment with GitOps and Argo CD.
+- Implement the progressive hands-on project, HiveBox phase 6.
+- Focus areas: Planning (12.5%), Code (12.5%), Infrastructure (12.5%), Containers (12.5%), Continuous Integration (12.5%), Continuous Delivery (12.5%), and Continuous Deployment (25%).
 
 ## 6.1 Planning - Agile Retrospective
 
@@ -114,8 +125,9 @@ Multi-environment setup is not a trivial topic, but like anything else, doing it
 - So, in the end, what are Kubernetes operators? And why do we need them?
   > Operators are software extensions to Kubernetes that use custom resources to manage applications and their components. The operator's goal is to put domain knowledge into the software that helps to simplify the management of complex applications on Kubernetes.
 - Hence, an Operator simply is a [controller](https://kubernetes.io/docs/concepts/architecture/controller/) that watches events of [custom resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) in the Kubernetes API and takes actions based on the operator’s logic.
+
 <p align="center">
-  <img alt="Kubernetes Operator flow" border="0" width="90%" src={require('./6.5-kubernetes-operator-flow.png').default} />
+  <img title="Kubernetes Operator flow" alt="Kubernetes Operator flow" border="0" width="90%" src={require('./6.5-kubernetes-operator-flow.png').default} />
 </p>
 
 - This logic in Kubernetes is defined by **Custom Resource Definitions** (CRDs), which extend the Kubernetes API to include new resource types that the Operator can manage. You can list CRDs in your cluster by running `kubectl get customresourcedefinitions`.
@@ -185,7 +197,7 @@ Multi-environment setup is not a trivial topic, but like anything else, doing it
 ## 6.8 Continuous Deployment - GitOps and Argo CD Essentials
 
 <p align="center">
-  <img alt="Skill Set Shapes" border="0" width="90%" src="/img/reconciliation-loop.png"/>
+  <img class="section-cover-image" title="Reconciliation loop" alt="Reconciliation loop" border="0" width="90%" src="/img/reconciliation-loop.png"/>
 </p>
 
 ### What you need to know {#68-what-you-need-to-know}
@@ -213,10 +225,14 @@ Don't mix between "Argo CD" and other [Argo projects](https://argoproj.github.io
 - [GitOps Continuous Deployment for cloud native applications - GitOps.tech](https://www.gitops.tech/)
 - [Argo CD Best Practices - Argo CD Docs](https://argo-cd.readthedocs.io/en/stable/user-guide/best_practices/)
 
-## Project - HiveBox Phase 6
+## Quiz
+
+<Quiz data={QuizData}/>
+
+## Hands-on
 
 Follow the instructions in the [HiveBox project phase 6](../../projects/hivebox#phase-6).
 
-## Interview Questions - Module 6
+## Interview Questions
 
 Review the interview questions related to [Module 6](../../interview/common-questions#module-6).

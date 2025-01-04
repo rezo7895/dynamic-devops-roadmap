@@ -1,28 +1,36 @@
 ---
 title: Getting Started
-sidebar_position: 2
+sidebar_position: 1
 description: How to start with the Dynamic DevOps Roadmap
-image: /img/dynamic-devops-roadmap-flow.png
+image: /img/dynamic-devops-roadmap-modules.png
+toc_max_heading_level: 2
 ---
 
 import DocCardList from '@theme/DocCardList';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import DetailedIndex from './_detailed-index.mdx';
-import QuickIndex from './_quick-index.json';
+import {HomepageFeaturesModulesOnly as QuickIndex} from '@site/src/components/HomepageFeaturesModules';
 
 <p align="center">
-  <img alt="Dynamic DevOps Roadmap Flow" border="0" src="/img/dynamic-devops-roadmap-flow.png" />
+  <img class="page-cover-image" title="Dynamic DevOps Roadmap Modules" alt="Dynamic DevOps Roadmap Modules" border="0" src="/img/dynamic-devops-roadmap-modules.png" />
 </p>
 
 ## Before you start
 
 Here is a pre-start checklist:
 
-- 📃 <a target="_blank" href="../faq/">Read the frequently asked questions page</a>, it has many valuable information (**really, do it!**).
 - ⭐ <a target="_blank" href="https://github.com/DevOpsHiveHQ/dynamic-devops-roadmap">Star the project repo</a> on GitHub for better visibility.
 - ✉️ <a target="_blank" href="https://newsletter.devopsroadmap.io/subscribe">Subscribe to the newsletter</a> for the project community activities, which include mentorship, job posting, online meetings, workshops, career tips and tricks, and more.
 - 🌐 <a target="_blank" href="https://t.me/DevOpsHive/985">Join the Telegram group</a> for interactive communication.
+
+## Frequently Asked Questions
+
+Ensure to read the [frequently asked questions page](../faq/), it has many valuable information that you need before you start (**really, do it!**).
+
+## Learning Plan
+
+This roadmap encourages you to learn in the best way that fits you. It also provide [a generic learning plan](../learning-plan) that could help you to progress in the roadmap (however, the plan could vary [based on your background](../faq#who-is-the-target-audience-for-this-roadmap)).
 
 ## How to use this roadmap?
 
@@ -65,21 +73,15 @@ This roadmap is `polymorphic`, which means it's designed to work in different mo
   </TabItem>
 </Tabs>
 
-
-## Study Plan
-
-<details>
-  To be added.
-</details>
-
-
 ## Roadmap Index
 
 Visit [HiveBox Project](../projects/hivebox/) if interested in the DevOps hands-on project **only**. Continue if you want the full roadmap.
 
 <Tabs queryString="index">
   <TabItem value="quick" label="Quick Index" default>
-    <DocCardList items={QuickIndex} />
+    <div class="getting-started">
+      <QuickIndex />
+    </div>
   </TabItem>
   <TabItem value="detailed" label="Detailed Index">
     <DetailedIndex />

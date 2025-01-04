@@ -2,13 +2,26 @@
 title: "Module 5: Transform - Finishing the Structure"
 sidebar_label: "5. Transform - Finishing the Structure"
 description: "Refine goals, integrate code with external systems, and write integration tests. Also, utilize Infrastructure as Code, learn Terraform essentials, and Kubernetes configuration management like Helm and Kustomize. Then, implement CD best practices — and finally, a hands-on with the HiveBox project"
+toc_max_heading_level: 2
 ---
+
+import Quiz from '@site/src/components/Quiz';
+import QuizData from './module-05-quiz.json';
 
 [🗂 Back to the Roadmap Index](../../getting-started#roadmap-index)
 
 <p align="center">
-  <img alt="Module Overview" border="0" width="90%" src={require('./module-05-overview.png').default} />
+  <img class="module-overview-image" alt="Module Overview" border="0" width="90%" src={require('./module-05-overview.png').default} />
 </p>
+
+## Module Overview
+
+- Refine goals and requirements.
+- Integrate code with external systems and write integration tests.
+- Utilize Infrastructure as Code, learn Terraform essentials and Kubernetes configuration management like Helm and Kustomize.
+- Apply Continuous Delivery best practices.
+- Implement the progressive hands-on project, HiveBox phase 5.
+- Focus areas: Planning (12.5%), Code (25%), Infrastructure (25%), Containers (12.5%), Observability (12.5%), Continuous Delivery (12.5%).
 
 ## 5.1 Planning - Refine the Goals and Requirements
 
@@ -85,7 +98,7 @@ description: "Refine goals, integrate code with external systems, and write inte
   - **Domain-specific language (DSL)**: There are two approaches to writing IaC: either using tools that utilize DSLs like Terraform and Crossplane or using tools that utilize programming languages like Pulumi and AWS CDK.
 - Without going into much detail about [what's declarative and what's not](https://leebriggs.co.uk/blog/2022/07/20/nobody-knows-what-declarative-is) ... you should look for tools that allow you to state how you want your infrastructure to look like [Terraform](https://www.terraform.io/) or [Crossplane](https://www.crossplane.io/) and use DSL for simplicity.
 - In all cases, using imperative scripts in any language (Bash, Python, etc.) is not recommended; that's not the ideal IaC and will hit you hard in the future when you try to automate the IaC via GitOps (it will be covered in the following modules).
-- Finally, in the current container era, Configuration Management tools like Ansible and SaltStack are less used in favor of using a container ecosystem (in this roadmap, we will not cover them).
+- Finally, in the current container era, Configuration Management tools like Ansible and SaltStack are less and less used in favor of a container ecosystem. In this roadmap, we will not cover them; learn one of them when you need it (Ansible is highly recommended).
 
 ### Resources {#54-resources}
 
@@ -186,10 +199,14 @@ description: "Refine goals, integrate code with external systems, and write inte
 - [How to keep up with CI/CD best practices - Continuous delivery best practices - GitLab](https://about.gitlab.com/blog/2022/02/03/how-to-keep-up-with-ci-cd-best-practices/#continuous-delivery-best-practices)
 - [What is Continuous Delivery? Tools and Best Practices - XenonStack](https://www.xenonstack.com/insights/what-is-continuous-delivery)
 
-## Project - HiveBox Phase 5
+## Quiz
+
+<Quiz data={QuizData}/>
+
+## Hands-on
 
 Follow the instructions in the [HiveBox project phase 5](../../projects/hivebox#phase-5).
 
-## Interview Questions - Module 5
+## Interview Questions
 
 Review the interview questions related to [Module 5](../../interview/common-questions#module-5).

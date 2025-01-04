@@ -14,7 +14,7 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/dynamic-devops-roadmap-progressive.svg').default,
     description: (
       <>
-         MVP-style learning path works in phases
+        MVP-style learning path works in phases
       </>
     ),
   },
@@ -38,14 +38,14 @@ const FeatureList: FeatureItem[] = [
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({ title, Svg, description }: FeatureItem) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
         <Svg className={styles.featureSvg} role="img" />
       </div>
       <div className="text--center padding-horiz--md">
-        <Heading as="h2">{title}</Heading>
+        <Heading as="h3">{title}</Heading>
         <p>{description}</p>
       </div>
     </div>
@@ -54,14 +54,19 @@ function Feature({title, Svg, description}: FeatureItem) {
 
 export default function HomepageFeatures(): JSX.Element {
   return (
-    <section className={styles.features}>
-      <div className="container">
-        <div className="row">
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
-          ))}
+    <div style={{background: 'var(--ifm-color-light)'}}>
+      <Heading as="h2" className={styles.featuresHeader} id="pillars">
+        Dynamic DevOps Roadmap Pillars
+      </Heading>
+      <section className={styles.features}>
+        <div className="container">
+          <div className="row">
+            {FeatureList.map((props, idx) => (
+              <Feature key={idx} {...props} />
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
