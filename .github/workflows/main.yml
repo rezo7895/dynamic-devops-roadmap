@@ -5,7 +5,7 @@ on:
       - ali
       - osama
 jobs:
-  lint:
+  Lint:
     runs-on: ubuntu-22.04
     steps:
     - name: Checkout the code
@@ -27,8 +27,8 @@ jobs:
           chmod +x /usr/local/bin/hadolint
     - name: Lint Dockerfile
       run: hadolint Dockerfile
-  build:
-    needs: lint
+  Build:
+    needs: Lint
     runs-on: ubuntu-latest
     steps:
     - name: Checkout the code
@@ -37,8 +37,8 @@ jobs:
       uses: docker/setup-buildx-action@v2
     - name: build and run dockerfile
       run: docker compose build 
-  test_endpoint:
-    needs: build
+  Test_endpoint:
+    needs: Build
     runs-on: ubuntu-22.04
     steps:
     - name: Checkout the code
@@ -63,8 +63,8 @@ jobs:
         exit 1
         fi
         echo "Endpoint returned the correct response: $value"
-  unit_test:
-    needs: test_endpoint
+  Tests:
+    needs: Test_endpoint
     runs-on: ubuntu-22.04
     steps:
     - name: Checkout the code
