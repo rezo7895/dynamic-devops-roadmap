@@ -60,6 +60,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
   terrascan_job:
+    needs: SonarQube_Analysis
     runs-on: ubuntu-latest
     name: terrascan-action
     steps:
