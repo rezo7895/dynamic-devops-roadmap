@@ -27,40 +27,40 @@ jobs:
           chmod +x /usr/local/bin/hadolint
     - name: Lint Dockerfile
       run: hadolint Dockerfile
-  # SonarQube_Analysis:
-  #   needs: Linting_Test
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - name: Checkout the code
-  #     uses: actions/checkout@v3
-  #   - name: Set up JDK
-  #     uses: actions/setup-java@v2
-  #     with:
-  #       java-version: '17'
-  #       distribution: 'adopt-openj9'  
-  #   - name: Analyze with SonarQube
-  #       # You can pin the exact commit or the version.
-  #     uses: SonarSource/sonarqube-scan-action@v4
-  #     env:
-  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
-  #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   
-  #       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-  #     with:
-  #       args:
-  #         -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-  #         #-Dsonar.branch.name=ali
-  #   - name: Wait for Quality Gate result
-  #     id: quality-gate
-  #     run: |
-  #           response=$(curl -s -u $SONAR_TOKEN: $SONAR_HOST_URL/api/qualitygates/project_status?projectKey=${{ secrets.SONAR_PROJECT_KEY }})
-  #           echo "Quality Gate Response: $response"
-  #           status=$(echo $response | jq -r .projectStatus.status)
-  #           echo "::set-output name=status::$status"
-  #     env:
-  #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  #       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-  terrascan_job:
+  SonarQube_Analysis:
     needs: Linting_Test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v3
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'adopt-openj9'  
+    - name: Analyze with SonarQube
+        # You can pin the exact commit or the version.
+      uses: SonarSource/sonarqube-scan-action@v4
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}   
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      with:
+        args:
+          -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+          #-Dsonar.branch.name=ali
+    - name: Wait for Quality Gate result
+      id: quality-gate
+      run: |
+            response=$(curl -s -u $SONAR_TOKEN: $SONAR_HOST_URL/api/qualitygates/project_status?projectKey=${{ secrets.SONAR_PROJECT_KEY }})
+            echo "Quality Gate Response: $response"
+            status=$(echo $response | jq -r .projectStatus.status)
+            echo "::set-output name=status::$status"
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+  terrascan_job:
+    needs: SonarQube_Analysis
     runs-on: ubuntu-latest
     name: terrascan-action
     steps:
@@ -77,12 +77,6 @@ jobs:
         verbose: true
         sarif_upload: true
         iac_dir: './k8s-manifests'
-        output_file: terrascan-output.json
-    - name: Upload Terrascan results as artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: terrascan-results
-        path: terrascan-output.json
     
   Python_Tests:
     needs: terrascan_job
@@ -120,5 +114,29 @@ jobs:
         echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
         docker tag hivebox ghcr.io/rezo7895/hivebox:$IMAGE_TAG
         docker push ghcr.io/rezo7895/hivebox:$IMAGE_TAG
+  Deploy:
+    needs: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+      - name: Set up kubectl
+        run: |
+          curl -LO https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+      - name: Set up Kubeconfig for kind
+        run: |
+            mkdir -p $HOME/.kube
+            echo "${{ secrets.KUBECONFIG_SECRET }}" > $HOME/.kube/config
+      - name: Update Kubernetes deployment with new image
+        run: |
+            kubectl set image deployment/app-deployment python=ghcr.io/rezo7895/hivebox:$IMAGE_TAG
+            kubectl rollout status deployment/app-deployment
+      
+      - name: Verify deployment
+        run: |
+            kubectl get pods
+
 
 
