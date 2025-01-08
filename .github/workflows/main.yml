@@ -125,6 +125,9 @@ jobs:
           curl -LO https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/
+      - name: Create KIND Cluster
+        run: |
+          kind create cluster --name kind --wait 5m
       - name: Set up Kubeconfig for kind
         run: |
           mkdir -p $HOME/.kube
@@ -136,7 +139,8 @@ jobs:
           kubectl config current-context
       - name: Update Kubernetes deployment with new image
         run: |
-            kubectl get nodes
+            kubectl set image deployment/app-deployment python=ghcr.io/rezo7895/hivebox:$IMAGE_TAG
+            kubectl rollout status deployment/app-deployment
       
       - name: Verify deployment
         run: |
