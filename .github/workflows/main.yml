@@ -136,8 +136,7 @@ jobs:
           kubectl config current-context
       - name: Update Kubernetes deployment with new image
         run: |
-            kubectl set image deployment/app-deployment python=ghcr.io/rezo7895/hivebox:$IMAGE_TAG
-            kubectl rollout status deployment/app-deployment
+            kubectl get nodes
       
       - name: Verify deployment
         run: |
