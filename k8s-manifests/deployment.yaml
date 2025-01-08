@@ -40,7 +40,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - name: python
-        image: aliyasser98/hivebox:latest
+        image: ghcr.io/rezo7895/hivebox:1736335526
         ports:
         - containerPort: 5000
         - containerPort: 9090
