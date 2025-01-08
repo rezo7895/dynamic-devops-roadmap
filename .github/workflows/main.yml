@@ -127,9 +127,10 @@ jobs:
           sudo mv kubectl /usr/local/bin/
       - name: Set up Kubeconfig for kind
         run: |
-            mkdir -p $HOME/.kube
-            echo "${{ secrets.KUBECONFIG_SECRET }}" > $HOME/.kube/config
-            cat $HOME/.kube/config
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBECONFIG_SECRET }}" | tr -d '\n' | base64 --decode > $HOME/.kube/config
+          echo "Kubeconfig file created:"
+          cat $HOME/.kube/config
       - name: Update Kubernetes deployment with new image
         run: |
             kubectl set image deployment/app-deployment python=ghcr.io/rezo7895/hivebox:$IMAGE_TAG
