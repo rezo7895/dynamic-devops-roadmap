@@ -20,15 +20,15 @@ module "ec2" {
   instance_profile  = module.eks.eks_profile
 }
 
-# module "ecr" {
-#   source = "./modules/ecr"
-# }
+module "ecr" {
+  source = "./modules/ecr"
+}
 
-# module "eks" {
-#   source                 = "./modules/eks"
-#   eni_subnet_ids         = module.network.private_subnets_id
-#   nodegroup_subnets_id   = module.network.private_subnets_id
-# }
+module "eks" {
+  source                 = "./modules/eks"
+  eni_subnet_ids         = module.network.private_subnets_id
+  nodegroup_subnets_id   = module.network.private_subnets_id
+}
 
 #Output to retrive EC2 instance public IP
 output "ec2_public_ip" {

@@ -17,15 +17,29 @@ resource "aws_security_group" "sg" {
   }
 
   ingress {
-    from_port   = 8080     # open port (8080) for jenkins CI/CD
-    to_port     = 8080
+    from_port   = 30000     # open port (8080) for jenkins CI/CD
+    to_port     = 30000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port   = 9000     #SonarQubr
-    to_port     = 9000
+    from_port   = 30001    #SonarQubr
+    to_port     = 30001
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 30002     # open port (8080) for jenkins CI/CD
+    to_port     = 30002
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 30003     # open port (8080) for jenkins CI/CD
+    to_port     = 30003
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
