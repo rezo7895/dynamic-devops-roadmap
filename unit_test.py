@@ -1,5 +1,6 @@
 '''Unit Test For all endpoints'''
 import json
+from unittest.mock import mock_open
 import requests
 import pytest
 from app import app, VERSION
@@ -23,7 +24,7 @@ def test_version(client_fixture):
     assert data['version'] == VERSION
 
 
-def test_temperature_success(client_fixture, mocker):
+def test_temperature_success_without_redis_caching(client_fixture, mocker):
     """
     Test the temperature endpoint for a successful response.
     """
@@ -36,7 +37,45 @@ def test_temperature_success(client_fixture, mocker):
     mocker.patch('app.requests.get', return_value=mocker.Mock(
                                 status_code=200, json=lambda: mock_response
                                 ))
+    mock_redis = mocker.patch('app.r')
+    mock_minio = mocker.patch('app.Minio')
+    mock_file = mocker.patch('builtins.open', mock_open())
+    mock_os_remove = mocker.patch('os.remove')
 
+    mock_redis.get.return_value = None
+    response = client_fixture.get('/temperature')
+    data = json.loads(response.data)
+    assert response.status_code == 200
+    assert 'Average_Temperature' in data
+    # Update the expected value to match the calculated average
+    assert float(data['Average_Temperature']) == pytest.approx(20.5, rel=1e-3)
+    mock_file.assert_called_once_with("temperature_response.txt", "w")
+    mock_file().write.assert_called()
+    mock_minio.assert_called_once()
+    mock_minio.return_value.fput_object.assert_called_once_with(
+            "hivebox", "temperature_response.txt", "temperature_response.txt"
+        )
+    mock_os_remove.assert_called_once_with("temperature_response.txt")
+
+
+def test_temperature_success_with_redis_caching(client_fixture, mocker):
+    """
+    Test the temperature endpoint for a successful response.
+    """
+    # Mocking the external request to simulate OpenSenseMap API response
+    mock_response = [
+        {"value": "20.5"},
+        {"value": "22.0"},
+        {"value": "18.0"}
+    ]
+    mocker.patch('app.requests.get', return_value=mocker.Mock(
+                                status_code=200, json=lambda: mock_response
+                                ))
+    mock_redis = mocker.patch('app.r')
+    mock_minio = mocker.patch('app.Minio')
+    mock_file = mocker.patch('builtins.open', mock_open())
+    mock_os_remove = mocker.patch('os.remove')
+    mock_redis.get.return_value = '[{"value": 20.5}]'
     response = client_fixture.get('/temperature')
     data = json.loads(response.data)
 
@@ -44,6 +83,13 @@ def test_temperature_success(client_fixture, mocker):
     assert 'Average_Temperature' in data
     # Update the expected value to match the calculated average
     assert float(data['Average_Temperature']) == pytest.approx(20.5, rel=1e-3)
+    mock_file.assert_called_once_with("temperature_response.txt", "w")
+    mock_file().write.assert_called()
+    mock_minio.assert_called_once()
+    mock_minio.return_value.fput_object.assert_called_once_with(
+            "hivebox", "temperature_response.txt", "temperature_response.txt"
+        )
+    mock_os_remove.assert_called_once_with("temperature_response.txt")
 
 
 def test_temperature_failure(client_fixture, mocker):
@@ -55,6 +101,8 @@ def test_temperature_failure(client_fixture, mocker):
                  side_effect=requests.exceptions.RequestException(
                      "Request failed"
                      ))
+    mock_redis = mocker.patch('app.r')
+    mock_redis.get.return_value = None
     response = client_fixture.get('/temperature')
     data = json.loads(response.data)
     assert response.status_code == 500
@@ -75,7 +123,19 @@ def test_temperature_status(client_fixture, mocker):
     mocker.patch('app.requests.get', return_value=mocker.Mock(
                                     status_code=200,
                                     json=lambda: mock_response))
+    mock_redis = mocker.patch('app.r')
+    mock_minio = mocker.patch('app.Minio')
+    mock_file = mocker.patch('builtins.open', mock_open())
+    mock_os_remove = mocker.patch('os.remove')
+    mock_redis.get.return_value = None
     response = client_fixture.get('/temperature')
     data = json.loads(response.data)
     assert response.status_code == 200
     assert data['Status'] == 'Good'
+    mock_file.assert_called_once_with("temperature_response.txt", "w")
+    mock_file().write.assert_called()
+    mock_minio.assert_called_once()
+    mock_minio.return_value.fput_object.assert_called_once_with(
+        "hivebox", "temperature_response.txt", "temperature_response.txt"
+        )
+    mock_os_remove.assert_called_once_with("temperature_response.txt")

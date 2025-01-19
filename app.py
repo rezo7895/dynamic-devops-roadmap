@@ -6,7 +6,10 @@ from datetime import timezone, timedelta
 import datetime
 import os
 import time
+import json
 import requests
+import valkey
+from minio import Minio
 from flask import Flask, jsonify
 from prometheus_client import Counter, Histogram, make_wsgi_app
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
@@ -54,11 +57,22 @@ def version_endpoint():
     return jsonify({"version": VERSION})
 
 
+r = valkey.Valkey(host='valkey', port=6379)
+
+
 @app.route("/temperature", methods=["GET"])
 def temperature_endpoint():
     """
     Endpoint to return the average temperature based on all sensebox Data
     """
+    client = Minio(
+        "minio:9000",
+        access_key="miniouser",
+        secret_key="P@ssw0rd",
+        secure=False
+    )
+    bucket_name = 'hivebox'
+    destination_file = "temperature_response.txt"
     start_time = time.time()
     REQUEST_COUNT.labels('GET', '/', 200).inc()
     REQUEST_LATENCY.labels("GET", "/").observe(time.time() - start_time)
@@ -75,33 +89,46 @@ def temperature_endpoint():
         )
         ).split(",")
     for i in sensebox_ids:
-        params = {
-            "boxId": i,
-            "phenomenon": "Temperatur",
-            "from-date": from_date,
-            "format": "json"
-        }
-        try:
-            response = requests.get(base_url, params=params, timeout=10)
-            response.raise_for_status()
-            data = response.json()
-            temperature[i] = data
-        except requests.RequestException as e:
-            return jsonify({"error": "Failed to fetch data",
-                            "details": str(e)}), 500
+        cached_data = r.get(f"temperature:{i}")
+        if cached_data:
+            temperature[i] = json.loads(cached_data)
+        else:
+            params = {
+                "boxId": i,
+                "phenomenon": "Temperatur",
+                "from-date": from_date,
+                "format": "json"
+            }
+            try:
+                response = requests.get(base_url, params=params, timeout=10)
+                response.raise_for_status()
+                data = response.json()
+                temperature[i] = data
+                r.set(f"temperature:{i}", json.dumps(data), ex=300)
+            except requests.RequestException as e:
+                return jsonify({"error": "Failed to fetch data",
+                                "details": str(e)}), 500
     for i, j in temperature.items():
         avg_temp.append(float(j[0]["value"]))
-    avg = sum(avg_temp)/len(avg_temp)
+    avg = sum(avg_temp) / len(avg_temp)
     if avg <= 10:
         status = "Too Cold"
     elif 10 <= avg <= 36:
         status = "Good"
     else:
         status = "Too Hot"
-    return jsonify({
-        "Average_Temperature":  f"{avg:.3f}",
+    result = {
+        "Average_Temperature": f"{avg:.3f}",
         "Status": status
-        })
+    }
+    try:
+        with open(destination_file, "w") as f:
+            json.dump(result, f)
+        client.fput_object(bucket_name, destination_file, destination_file)
+        os.remove(destination_file)
+    except Exception as e:
+        print(f"Error uploading data to MinIO: {e}")
+    return jsonify(result)
 
 
 if __name__ == "__main__":

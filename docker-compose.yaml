@@ -9,9 +9,44 @@ services:
       - 5000:5000
     depends_on:
       - prometheus
+      - valkey
+      - minio
+    environment:
+      VALKEY_HOST: valkey
+      VALKEY_PORT: 6379
+      MINIO_ENDPOINT: minio
+      MINIO_ROOT_USER: miniouser
+      MINIO_ROOT_PASSWORD: P@ssw0rd
+      MINIO_BUCKET: hivebox
   prometheus:
     image: bitnami/prometheus
     ports:
       - 9090:9090
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  valkey:
+    image: valkey/valkey:alpine
+    container_name: valkey
+    ports:
+      - 6379:6379
+    command: redis-server --bind 0.0.0.0 --protected-mode no
+  minio:
+    image: minio/minio
+    container_name: minio
+    command: server /data  --console-address ":9001"
+    ports:
+      - 9000:9000
+      - 9001:9001
+    environment:
+      MINIO_ROOT_USER: miniouser
+      MINIO_ROOT_PASSWORD: P@ssw0rd
+    volumes:
+      - /c/Users/alyya/mino_data:/data
+
+volumes:
+  mino_data:
+
+#/c/Users\alyya\AppData\Local\Docker\wsl
+
+#c/Users/alyya/AppData/Local/Docker/wsl/mino_data
+#c/Users/alyya/AppData/Local/Docker/wsl/mino_data

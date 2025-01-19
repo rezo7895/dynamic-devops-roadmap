@@ -114,38 +114,38 @@ jobs:
         echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
         docker tag hivebox ghcr.io/rezo7895/hivebox:$IMAGE_TAG
         docker push ghcr.io/rezo7895/hivebox:$IMAGE_TAG
-  Deploy:
-    needs: Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v3
-      - name: Set up kubectl
-        run: |
-          curl -LO https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl
-          chmod +x kubectl
-          sudo mv kubectl /usr/local/bin/
-      - name: Create KIND Cluster
-        run: |
-          kind create cluster --name kind --config cluster-config.yaml --wait 5m      
-      - name: Set up Kubeconfig for kind
-        run: |
-          mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBECONFIG_SECRET }}" | tr -d '\n' | base64 --decode > $HOME/.kube/config
-          echo "Kubeconfig file created:"
-          cat $HOME/.kube/config
-      - name: Verify Kubernetes API server
-        run: |
-            kubectl cluster-info
-            kubectl get nodes
-      - name: Update Kubernetes deployment with new image
-        run: |
-            kubectl set image deployment/app-deployment python=ghcr.io/rezo7895/hivebox:$IMAGE_TAG
-            kubectl rollout status deployment/app-deployment
+  # Deploy:
+  #   needs: Build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout the code
+  #       uses: actions/checkout@v3
+  #     - name: Set up kubectl
+  #       run: |
+  #         curl -LO https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl
+  #         chmod +x kubectl
+  #         sudo mv kubectl /usr/local/bin/
+  #     - name: Create KIND Cluster
+  #       run: |
+  #         kind create cluster --name kind --config cluster-config.yaml --wait 5m      
+  #     - name: Set up Kubeconfig for kind
+  #       run: |
+  #         mkdir -p $HOME/.kube
+  #         echo "${{ secrets.KUBECONFIG_SECRET }}" | tr -d '\n' | base64 --decode > $HOME/.kube/config
+  #         echo "Kubeconfig file created:"
+  #         cat $HOME/.kube/config
+  #     - name: Verify Kubernetes API server
+  #       run: |
+  #           kubectl cluster-info
+  #           kubectl get nodes
+  #     - name: Update Kubernetes deployment with new image
+  #       run: |
+  #           kubectl set image deployment/app-deployment python=ghcr.io/rezo7895/hivebox:$IMAGE_TAG
+  #           kubectl rollout status deployment/app-deployment
       
-      - name: Verify deployment
-        run: |
-            kubectl get pods
+  #     - name: Verify deployment
+  #       run: |
+  #           kubectl get pods
 
   
             
