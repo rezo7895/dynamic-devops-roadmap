@@ -6,13 +6,16 @@ image: /img/devops-methodology-pillars-preview.png
 toc_max_heading_level: 2
 ---
 
+import {TargetAudience} from '@site/src/components/Audience';
+import ModuleHeader from '@site/src/components/ModuleHeader';
 import Quiz from '@site/src/components/Quiz';
 import QuizData from './module-01-quiz.json';
 
-[🗂 Back to the Roadmap Index](../../getting-started#roadmap-index)
+<ModuleHeader />
 
 <p align="center">
-  <img class="module-overview-image" alt="Module Overview" border="0" src={require('./module-01-overview.png').default} />
+  <img class="module-overview-image" alt="Module Overview" border="0"
+    src={require('./module-01-overview.png').default} />
 </p>
 
 ## Module Overview
@@ -29,6 +32,10 @@ import QuizData from './module-01-quiz.json';
 DevOps methodology is a set of `Practices`, `Tools`, `Culture`, and, most importantly, `Mindset` aiming to improve collaboration and communication between software development (Dev) and operations (Ops) teams. It seeks to dismantle the conventional operational silos. It promotes a collaborative, automated, and sustainable culture, which enhances the efficiency of the whole software development lifecycle (starting from planning, coding, testing, deployment, and operations).
 
 In conclusion, adopting DevOps enhances collaboration between teams, enhances feedback loops, ensures faster time to market, improves quality, increases reliability and stability, increases cost efficiency, and, first and foremost, aligns the tech goals with the business objectives.
+
+### Audience {#11-audience}
+
+<TargetAudience roles={['devops', 'software', 'all']} />
 
 ### What you need to know {#11-what-you-need-to-know}
 
@@ -54,6 +61,10 @@ Some topics in this module may seem new or theoretical, but don't worry! Keep re
 
 The Software Development Life Cycle (SDLC) is a process or set of phases that guide the development of software. It covers the whole process of making the software which includes planning, designing, development, testing, deploying, and maintaining software systems.
 
+### Audience {#12-audience}
+
+<TargetAudience roles={['devops', 'software', 'all']} />
+
 ### What you need to know {#12-what-you-need-to-know}
 
 - There are many factors and drivers of software production, but the most common ones are the "Iron Triangle" or "Triple Constraint," which are `Time`, `Scope`, and `Cost`. Those play a key role in software project management.
@@ -65,13 +76,17 @@ The Software Development Life Cycle (SDLC) is a process or set of phases that gu
 ### Resources {#12-resources}
 
 - [The Software Development Life Cycle (SDLC) - The Product Manager](https://theproductmanager.com/topics/software-development-life-cycle/): A great resource that covers the main phases and common models of SDLC.
-- [Introduction to Software Product Management - Coursera](https://www.coursera.org/learn/introduction-to-software-product-management?specialization=product-management): 4 course that covers the foundation of software production.
+- [Introduction to Software Product Management - Coursera](https://www.coursera.org/learn/introduction-to-software-product-management?specialization=product-management): A course that covers the foundation of software production.
 
 ## 1.3 Software Production - Agile Software Development
 
 <p align="center">
   <img class="section-cover-image" title="Different Types of Quality Models" alt="Shif-Left and Shfit-Right Quality Models" border="0" width="90%" src="/img/quality-models.png"/>
 </p>
+
+### Audience {#13-audience}
+
+<TargetAudience roles={['devops', 'software', 'all']} />
 
 ### What you need to know {#13-what-you-need-to-know}
 
@@ -91,6 +106,10 @@ The Software Development Life Cycle (SDLC) is a process or set of phases that gu
 - [Shift left vs Shift right: When to use which? - BrowserStack](https://www.browserstack.com/guide/shift-left-vs-shift-right)
 
 ## 1.4 Software Production - Change Management and Golden Triangle
+
+### Audience {#14-audience}
+
+<TargetAudience roles={['devops', 'software', 'all']} />
 
 ### What you need to know {#14-what-you-need-to-know}
 
@@ -112,6 +131,10 @@ The Software Development Life Cycle (SDLC) is a process or set of phases that gu
 ## 1.5 DevOps Methodology - DevOps and DevSecOps Core Pillars
 
 <img class="img-right" align="right" width="25%" src="/img/topics/devops-methodology.png"></img>
+
+### Audience {#15-audience}
+
+<TargetAudience roles={['devops', 'software', 'all']} />
 
 ### What you need to know {#15-what-you-need-to-know}
 
@@ -144,6 +167,10 @@ The Software Development Life Cycle (SDLC) is a process or set of phases that gu
   <img class="section-cover-image" title="DevOps Implementations" alt="DevOps Implementations" border="0" width="90%" src="/img/devops-implementations.png"/>
 </p>
 
+### Audience {#16-audience}
+
+<TargetAudience roles={['devops', 'software', 'all']} />
+
 ### What you need to know {#16-what-you-need-to-know}
 
 - Maybe the title "DevOps Engineer" is not the most accurate title in the software industry, that's because it could mean many things.
@@ -169,6 +196,10 @@ The Software Development Life Cycle (SDLC) is a process or set of phases that gu
 <p align="center">
   <img class="section-cover-image" title="Skill Set Shapes" alt="Skill Set Shapes" border="0" width="90%" src="/img/skill-set-shapes.png"/>
 </p>
+
+### Audience {#17-audience}
+
+<TargetAudience roles={['devops', 'software', 'all']} />
 
 ### What you need to know {#17-what-you-need-to-know}
 

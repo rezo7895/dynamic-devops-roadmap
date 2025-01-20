@@ -9,7 +9,11 @@ sidebar_label: "Interview Common Questions"
 description: "Most common interview questions for DevOps role"
 sidebar_position: 2
 toc_max_heading_level: 2
+<<<<<<< HEAD
 >>>>>>> 110de49f6829663a4937727970ccbcd9497945c7
+=======
+image: /img/interview.png
+>>>>>>> 7f3e4db3fc9168a36ef9350eaa81126ec969575d
 ---
 
 ## Approach

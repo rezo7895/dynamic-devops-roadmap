@@ -4,7 +4,9 @@ description: "An overview of our Dynamic DevOps Roadmap and how this MVP-style r
 toc_max_heading_level: 2
 ---
 
-[🗂 Back to the Roadmap Index](../../getting-started#roadmap-index)
+import ModuleHeader from '@site/src/components/ModuleHeader';
+
+<ModuleHeader />
 
 <p align="center">
   <img class="page-cover-image" alt="Dynamic DevOps Roadmap Pillars" border="0" src="/img/dynamic-devops-roadmap-pillars.png" />
@@ -35,5 +37,11 @@ The roadmap has a [multiphase industry-grad project](../../projects/hivebox) tha
 This roadmap is designed for the cloud-native post-container era, which means it will mainly focus on modern practices like Cloud, Docker, and Kubernetes. That doesn't mean everything should be complex, but just about [treating your servers like cattle, not pets](https://www.hava.io/blog/cattle-vs-pets-devops-explained). For example, using Kubernetes doesn't always mean you need to create or manage Kubernetes clusters! Many serverless Kubernetes solutions are now like AWS EKS Fargate or GCP GKE Autopilot. So this roadmap doesn't claim one way of doing DevOps because DevOps already has many [implementations and topologies](https://web.devopstopologies.com/), but as mentioned, it focuses on modern practices and technologies.
 
 ## Soft Skills
+
+<p align="center">
+  <img class="section-cover-image" title="Priming Effect in Learning" alt="Priming Effect in Learning" border="0" width="90%" src="/img/priming-effect.png" />
+  <br/>
+  Working with a mentor or a peer (even on the same level) can influence the learning process and achieve better results.
+</p>
 
 Unlike many other roadmaps, this roadmap doesn't focus only on the purely technical aspects of DevOps but also includes planning and management. Another critical aspect of a successful DevOps Engineer is good communication skills! That's why it's recommended that you do this roadmap in a group. Read more [why it is not recommended to start this roadmap alone?](../../faq#why-is-it-not-recommended-to-start-this-roadmap-alone) And always remember that, DevOps is about collaboration; **DevOps Engineer is not a Lone Wolf!**
