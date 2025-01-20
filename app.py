@@ -58,6 +58,7 @@ def version_endpoint():
 
 
 r = valkey.Valkey(host='valkey', port=6379)
+last_upload = 0
 
 
 @app.route("/temperature", methods=["GET"])
@@ -65,6 +66,8 @@ def temperature_endpoint():
     """
     Endpoint to return the average temperature based on all sensebox Data
     """
+    current_time = time.time()
+    global last_upload 
     client = Minio(
         "minio:9000",
         access_key="miniouser",
@@ -121,16 +124,19 @@ def temperature_endpoint():
         "Average_Temperature": f"{avg:.3f}",
         "Status": status
     }
-    try:
-        with open(destination_file, "w") as f:
-            json.dump(result, f)
-        client.fput_object(bucket_name, destination_file, destination_file)
-        os.remove(destination_file)
-    except Exception as e:
-        print(f"Error uploading data to MinIO: {e}")
+    if current_time - last_upload >= 300:
+        try:
+            with open(destination_file, "w") as f:
+                json.dump(result, f)
+            client.fput_object(bucket_name, destination_file, destination_file)
+            os.remove(destination_file)
+            last_upload = current_time
+        except Exception as e:
+            print(f"Error uploading data to MinIO: {e}")
     return jsonify(result)
 
 
 if __name__ == "__main__":
     # Run the Flask application
+    print(time.time())
     app.run(host="0.0.0.0", port=5000)
