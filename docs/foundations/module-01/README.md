@@ -3,21 +3,39 @@ title: "Module 1: Welcome to the DevOps World"
 sidebar_label: "1. Welcome to the DevOps World"
 description: "An introduction to the DevOps paradigm and the focus areas. Also, the relationship between DevOps, DevSecOps, and Agile in light of the Software Development Life Cycle (SDLC), in the end, is the initial phase of the HiveBox project."
 image: /img/devops-methodology-pillars-preview.png
+toc_max_heading_level: 2
 ---
 
-[🗂 Back to the Roadmap Index](../../getting-started#roadmap-index)
+import {TargetAudience} from '@site/src/components/Audience';
+import ModuleHeader from '@site/src/components/ModuleHeader';
+import Quiz from '@site/src/components/Quiz';
+import QuizData from './module-01-quiz.json';
+
+<ModuleHeader />
 
 <p align="center">
-  <img alt="Module Overview" border="0" src={require('./module-01-overview.png').default} />
+  <img class="module-overview-image" alt="Module Overview" border="0"
+    src={require('./module-01-overview.png').default} />
 </p>
 
-## 1.1 Overview - What and Why DevOps?
+## Module Overview
 
-<img class="img-right" align="right" width="40%" src="/img/devops-methodology-pillars.png"></img>
+- Introduction to the DevOps paradigm and the focus areas.
+- Relationship between DevOps, DevSecOps, and Agile in light of the Software Development Life Cycle (SDLC).
+- Implement the progressive hands-on project, HiveBox phase 1.
+- Focus areas: Software Production (50%), DevOps Methodology (50%).
+
+## 1.1 Foreword - What and Why DevOps?
+
+<img title="DevOps Methodology Pillars" alt="DevOps Methodology Pillars" class="img-right" align="right" width="40%" src="/img/devops-methodology-pillars.png"></img>
 
 DevOps methodology is a set of `Practices`, `Tools`, `Culture`, and, most importantly, `Mindset` aiming to improve collaboration and communication between software development (Dev) and operations (Ops) teams. It seeks to dismantle the conventional operational silos. It promotes a collaborative, automated, and sustainable culture, which enhances the efficiency of the whole software development lifecycle (starting from planning, coding, testing, deployment, and operations).
 
 In conclusion, adopting DevOps enhances collaboration between teams, enhances feedback loops, ensures faster time to market, improves quality, increases reliability and stability, increases cost efficiency, and, first and foremost, aligns the tech goals with the business objectives.
+
+### Audience {#11-audience}
+
+<TargetAudience roles={['devops', 'software', 'all']} />
 
 ### What you need to know {#11-what-you-need-to-know}
 
@@ -26,6 +44,10 @@ In conclusion, adopting DevOps enhances collaboration between teams, enhances fe
 - Hence, there was a need for a different process where both parts of Dev and Ops work together as early as possible.
 - It's also important to know that DevOps has many [implementations and topologies](https://web.devopstopologies.com/), and that's why it's hard to land your first job as a DevOps Engineer (because that could mean many things! Sometimes that title makes sense, and some other times it's misleading!).
 - Finally, just remember that DevOps is not about Dev doing Ops work or vice versa; it's actually a `paradigm shift` (i.e., you need to think differently).
+
+:::tip
+Some topics in this module may seem new or theoretical, but don't worry! Keep reading and learning about those topics, and you will see them in action in this roadmap.
+:::
 
 ### Resources {#11-resources}
 
@@ -39,6 +61,10 @@ In conclusion, adopting DevOps enhances collaboration between teams, enhances fe
 
 The Software Development Life Cycle (SDLC) is a process or set of phases that guide the development of software. It covers the whole process of making the software which includes planning, designing, development, testing, deploying, and maintaining software systems.
 
+### Audience {#12-audience}
+
+<TargetAudience roles={['devops', 'software', 'all']} />
+
 ### What you need to know {#12-what-you-need-to-know}
 
 - There are many factors and drivers of software production, but the most common ones are the "Iron Triangle" or "Triple Constraint," which are `Time`, `Scope`, and `Cost`. Those play a key role in software project management.
@@ -50,9 +76,17 @@ The Software Development Life Cycle (SDLC) is a process or set of phases that gu
 ### Resources {#12-resources}
 
 - [The Software Development Life Cycle (SDLC) - The Product Manager](https://theproductmanager.com/topics/software-development-life-cycle/): A great resource that covers the main phases and common models of SDLC.
-- [Introduction to Software Product Management - Coursera](https://www.coursera.org/learn/introduction-to-software-product-management?specialization=product-management): 4 course that covers the foundation of software production.
+- [Introduction to Software Product Management - Coursera](https://www.coursera.org/learn/introduction-to-software-product-management?specialization=product-management): A course that covers the foundation of software production.
 
 ## 1.3 Software Production - Agile Software Development
+
+<p align="center">
+  <img class="section-cover-image" title="Different Types of Quality Models" alt="Shif-Left and Shfit-Right Quality Models" border="0" width="90%" src="/img/quality-models.png"/>
+</p>
+
+### Audience {#13-audience}
+
+<TargetAudience roles={['devops', 'software', 'all']} />
 
 ### What you need to know {#13-what-you-need-to-know}
 
@@ -60,18 +94,26 @@ The Software Development Life Cycle (SDLC) is a process or set of phases that gu
 - As mentioned in the previous section, Agile is, at its core, `iterative`. This means it works in phases incrementally to achieve goals instead of linearly (exactly like this roadmap!).
 - There are many implementations of frameworks for Agile methodologies like Scrum, Kanban, and Extreme Programming (XP). And often, new frameworks emerge from the original ones, like [Scrumban](https://teamhood.com/agile-resources/what-is-scrumban/) (which is a mix between Scrum and Kanban).
 - The most important point here is to break down work into bite-size pieces; however, at the same time, avoid [Scope Creep](https://www.pmi.org/learning/library/top-five-causes-scope-creep-6675)! In short: **Make it work, then make it right, then make it fast!**
+- Shift-Left and Shift-Right are two important quality models, **both are complementary, not contradictory!**
+  - **Shift-Left:** Refers to early detection and prevention of issues. The tests are done as early as possible in the SDLC. Different activity types (like unit, integration, and end-to-end testing) and quality checks are done before going to production (releasing or deployment), which are made in a "continuous" manner.
+  - **Shift-Right:** Refers to late activities in the SDLC after going to production (releasing or deployment). Activities such as A/B testing and runtime security checks are done during this phase, which have more value at the end of the funnel.
 
 ### Resources {#13-resources}
 
 - [What Is Agile Product Management - The Product Manager](https://theproductmanager.com/topics/agile-product-management/)
 - [Software Processes and Agile Practices - Coursera](https://www.coursera.org/learn/software-processes-and-agile-practices?specialization=product-management): 8 hours course that covers the fundamentals of Agile software development and management practices.
 - [Is the Agile Manifesto still a thing? - Atlassian](https://www.atlassian.com/agile/manifesto): This post covers how Agile evolved over time and the changes that happened since the release of the Agile Manifesto (originally published in February 2001).
+- [Shift left vs Shift right: When to use which? - BrowserStack](https://www.browserstack.com/guide/shift-left-vs-shift-right)
 
 ## 1.4 Software Production - Change Management and Golden Triangle
 
+### Audience {#14-audience}
+
+<TargetAudience roles={['devops', 'software', 'all']} />
+
 ### What you need to know {#14-what-you-need-to-know}
 
-<img class="img-right" align="right" width="40%" src="/img/golden-triangle-ppt.png"></img>
+<img title="Golden Triangle" alt="Golden Triangle" class="img-right" align="right" width="40%" src="/img/golden-triangle-ppt.png"></img>
 
 - Software production is all about "change"! When, where, and why ... or in other words, it's about "Change Management".
 - Every new feature done by developers includes a risk! And it should be calculated and mitigated.
@@ -89,6 +131,10 @@ The Software Development Life Cycle (SDLC) is a process or set of phases that gu
 ## 1.5 DevOps Methodology - DevOps and DevSecOps Core Pillars
 
 <img class="img-right" align="right" width="25%" src="/img/topics/devops-methodology.png"></img>
+
+### Audience {#15-audience}
+
+<TargetAudience roles={['devops', 'software', 'all']} />
 
 ### What you need to know {#15-what-you-need-to-know}
 
@@ -118,8 +164,12 @@ The Software Development Life Cycle (SDLC) is a process or set of phases that gu
 ## 1.6 DevOps Methodology - DevOps, Cloud, Platform Engineer, and SRE
 
 <p align="center">
-  <img alt="DevOps Implementations" border="0" width="90%" src="/img/devops-implementations.png"/>
+  <img class="section-cover-image" title="DevOps Implementations" alt="DevOps Implementations" border="0" width="90%" src="/img/devops-implementations.png"/>
 </p>
+
+### Audience {#16-audience}
+
+<TargetAudience roles={['devops', 'software', 'all']} />
 
 ### What you need to know {#16-what-you-need-to-know}
 
@@ -144,8 +194,12 @@ The Software Development Life Cycle (SDLC) is a process or set of phases that gu
 ## 1.7 DevOps Methodology - T-Shaped Skills DevOps Engineer
 
 <p align="center">
-  <img alt="Skill Set Shapes" border="0" width="90%" src="/img/skill-set-shapes.png"/>
+  <img class="section-cover-image" title="Skill Set Shapes" alt="Skill Set Shapes" border="0" width="90%" src="/img/skill-set-shapes.png"/>
 </p>
+
+### Audience {#17-audience}
+
+<TargetAudience roles={['devops', 'software', 'all']} />
 
 ### What you need to know {#17-what-you-need-to-know}
 
@@ -161,10 +215,14 @@ The Software Development Life Cycle (SDLC) is a process or set of phases that gu
 - [3 Ways T-Shaped Skills are Important in DevOps Teams - EXIN](https://www.exin.com/article/devops-the-next-generation-3-ways-t-shaped-skills-are-important-in-devops-teams/): This article discusses what is a T-shaped professional, and why does it matter, and 3 areas where the T-shaped skills so important.
 - [T-shaped skills profiles and the human factor - McKinsey & Company](https://www.mckinsey.com/capabilities/operations/our-insights/operations-blog/ops-40-the-human-factor-a-class-size-of-1): This article covers the abstraction of T-shaped and how it affects organizations.
 
-## Project - HiveBox Phase 1
+## Quiz
+
+<Quiz data={QuizData}/>
+
+## Hands-on
 
 Follow the instructions in the [HiveBox project phase 1](../../projects/hivebox#phase-1).
 
-## Interview Questions - Module 1
+## Interview Questions
 
 Review the interview questions related to [Module 1](../../interview/common-questions#module-1).

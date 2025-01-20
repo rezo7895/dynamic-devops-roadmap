@@ -4,10 +4,12 @@ description: "You finished the roadmap, what should you do now?"
 image: /img/next-steps.png
 ---
 
-[🗂 Back to the Roadmap Index](../../getting-started#roadmap-index)
+import ModuleHeader from '@site/src/components/ModuleHeader';
+
+<ModuleHeader />
 
 <p align="center">
-  <img alt="Next Steps" border="0" src="/img/next-steps.png" />
+  <img class="page-cover-image" alt="Next Steps" border="0" src="/img/next-steps.png" />
 </p>
 
 Now that you've finished the roadmap, what's next? There is good news and bad news! The good news is that finishing this roadmap should increase your chances in the market. The bad news is that the tech industry is always evolving super fast, and the DevOps domain evolves even faster! So there are no options but to keep going and always stay in shape!
@@ -39,7 +41,11 @@ It's time to face the real world and prepare for the next steps. We will cover s
 
 ## Your CV/Resume, Cover Letter, and LinkedIn Profile
 
+<<<<<<< HEAD
 Ensure to have a proper CV/Resume, Cover Letter, and LinkedIn Profile. Avoid common mistakes by following [pre interview best practices](../../interview/best-practices/#pre-interview).
+=======
+Ensure to have a proper CV/Resume, Cover Letter, and LinkedIn Profile. Avoid common mistakes by following [pre interview best practices](../../interview/best-practices/#essentials).
+>>>>>>> 110de49f6829663a4937727970ccbcd9497945c7
 
 ## Interview Preparation
 

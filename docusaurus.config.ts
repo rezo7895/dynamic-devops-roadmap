@@ -1,10 +1,10 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
+import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Dynamic DevOps Roadmap',
-  tagline: 'A FREE pragmatic plan to kickstart your DevOps Engineer career in the Cloud Native era following the Agile MVP style!',
+  tagline: 'Experience-Driven DevOps: Beyond Tools, Where Concepts Meet Real-World Challenges',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -27,6 +27,10 @@ const config: Config = {
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
+  },
+
+  customFields: {
+    description: 'A FREE Pragmatic DevOps learning to kickstart your DevOps career in the Cloud Native era following the Agile MVP style! A DevOps Engineer or Software Engineer, this roadmap is all that you need to start, grow, and expand!',
   },
 
   presets: [
@@ -76,15 +80,49 @@ const config: Config = {
     ],
   ],
 
+  headTags: [
+    // Declare Apple touch icon.
+    {
+      tagName: 'link',
+      attributes: {
+        rel: "apple-touch-icon",
+        type: "image/png",
+        sizes: "300x300",
+        href: "/img/apple-touch-icon.png",
+      },
+    },
+    // Declare JSON-LD structured data.
+    {
+      tagName: 'script',
+      attributes: {
+        type: 'application/ld+json',
+      },
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'EducationalOccupationalProgram',
+        educationalProgramMode: 'blended',
+        name: 'Dynamic DevOps Roadmap',
+        url: 'https://devopsroadmap.io',
+        logo: 'https://devopsroadmap.io/img/logo.svg',
+      }),
+    },
+  ],
+
   themeConfig: {
+    metadata: [
+      { name: 'keywords', content: 'devops roadmap, devops, roadmap, career, career shift, sre, cloud, platform, software' },
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:title', content: 'A FREE Pragmatic Roadmap | Dynamic DevOps Roadmap' },
+      { name: 'twitter:description', content: 'A FREE Pragmatic DevOps learning to kickstart your DevOps career in the Cloud Native era following the Agile MVP style! (also mentorship and bootcamp)' },
+    ],
     announcementBar: {
       id: 'announcement',
-      content: '<b>Announcement:</b> <a target="_blank" href="https://newsletter.devopsroadmap.io/subscribe">Subscribe now</a> to the community activities, which include mentorship, job posting, online meetings, workshops, career tips and tricks, and more.',
-      backgroundColor: '#303846',
+      content: '<a target="_blank" href="https://github.com/DevOpsHiveHQ/dynamic-devops-roadmap">⭐ Star on GitHub ⭐</a> and <a target="_blank" href="https://newsletter.devopsroadmap.io/subscribe">✉️ Join the Community ✉️</a>',
+      backgroundColor: '#4d8b15',
       textColor: '#ffffff',
       isCloseable: false,
     },
-    image: 'img/dynamic-devops-roadmap-flow.png',
+    image: 'img/dynamic-devops-roadmap-modules.png',
     docs: {
       sidebar: {
         autoCollapseCategories: false,
@@ -98,20 +136,8 @@ const config: Config = {
       },
       items: [
         {
-          docId: "faq/README",
-          label: 'FAQ',
-          position: "left",
-          type: "doc",
-        },
-        {
           docId: "getting-started/README",
           label: 'Getting Started',
-          position: "left",
-          type: "doc",
-        },
-        {
-          docId: "foundations/README",
-          label: 'Foundations',
           position: "left",
           type: "doc",
         },
@@ -128,18 +154,33 @@ const config: Config = {
           type: "doc",
         },
         {
-          docId: "growth/README",
-          label: 'Growth',
+          label: 'More',
           position: "left",
-          type: "doc",
+          items: [
+            {
+              docId: "general/faq/README",
+              label: 'FAQ',
+              type: "doc",
+            },
+            {
+              docId: "general/learning-plan/README",
+              label: 'Learning Plan',
+              type: "doc",
+            },
+            {
+              docId: "growth/README",
+              label: 'Growth',
+              type: "doc",
+            },
+          ]
         },
         {
-          label: '⭐ Star on GitHub (1.4k+)',
+          label: '⭐ Star on GitHub (1.7k+)',
           href: 'https://github.com/DevOpsHiveHQ/dynamic-devops-roadmap',
           position: 'right',
         },
         {
-          label: '✉️ Newsletter',
+          label: '✉️ Community',
           href: 'https://newsletter.devopsroadmap.io/subscribe',
           position: 'right',
         },
@@ -195,7 +236,7 @@ const config: Config = {
               href: 'https://github.com/DevOpsHiveHQ/dynamic-devops-roadmap',
             },
             {
-              label: 'Newsletter',
+              label: 'Community',
               href: 'https://newsletter.devopsroadmap.io/subscribe',
             },
             {

@@ -1,5 +1,5 @@
 [![Dynamic DevOps Roadmap](https://img.shields.io/badge/Get_Started_Now-559e11?style=for-the-badge&logo=Vercel&logoColor=white)](https://devopsroadmap.io/getting-started/)
-[![Newsletter](https://img.shields.io/badge/Newsletter-%23FF6719?style=for-the-badge&logo=substack&logoColor=white)](https://newsletter.devopsroadmap.io/subscribe)
+[![Community](https://img.shields.io/badge/Join_Community-%23FF6719?style=for-the-badge&logo=substack&logoColor=white)](https://newsletter.devopsroadmap.io/subscribe)
 [![Telegram Group](https://img.shields.io/badge/Telegram_Group-%232ca5e0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/DevOpsHive/985)
 [![License](https://img.shields.io/github/license/DevOpsHiveHQ/dynamic-devops-roadmap?style=for-the-badge&color=ffcb00)](https://github.com/DevOpsHiveHQ/dynamic-devops-roadmap/blob/main/LICENSE)
 [![Status](https://img.shields.io/badge/Status-Ready-ffcb00?style=for-the-badge)](https://devopsroadmap.io/)
@@ -13,7 +13,19 @@
   </a>
 </p>
 
-[Dynamic DevOps Roadmap](https://devopsroadmap.io/) is a **FREE** pragmatic plan to kickstart your DevOps Engineer career in the Cloud Native era following the Agile MVP style!
+<div align="center">
+
+[🌐 Website](https://devopsroadmap.io/)
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+[✉️ Community](https://newsletter.devopsroadmap.io/subscribe)
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+[💬 Telegram](https://t.me/DevOpsHive/985)
+
+</div>
+
+[Dynamic DevOps Roadmap](https://devopsroadmap.io/) is a **FREE** pragmatic DevOps learning to kickstart your DevOps career in the Cloud Native era following the Agile MVP style!
+
+> Experience-Driven DevOps: Beyond Tools, Where Concepts Meet Real-World Challenges
 
 Unlike many other roadmaps, this roadmap is **effective**, **impactful**, and most importantly **feasible** because it takes a different approach following 3 principles:
 
@@ -25,6 +37,13 @@ Unlike many other roadmaps, this roadmap is **effective**, **impactful**, and mo
 ## Give it a Star! ⭐
 
 If you like this project, please [give it a star](#top) on GitHub for better visibility. Thanks!
+
+</br>
+<p align="center">
+  <a href="https://devopsroadmap.io/getting-started/" imageanchor="1">
+    <img src="https://img.shields.io/badge/Get_Started_Now-559e11?style=for-the-badge&logo=Vercel&logoColor=white" />
+  </a>
+</p>
 
 <!-- omit from toc -->
 ## Table of Contents
@@ -40,9 +59,8 @@ If you like this project, please [give it a star](#top) on GitHub for better vis
 
 Here is a pre-start checklist:
 
-- 📃 <a target="_blank" href="https://devopsroadmap.io/faq">Read the frequently asked questions page</a>, it has many valuable information (**really, do it!**).
 - ⭐ <a target="_blank" href="#top">Star the project repo</a> on GitHub for better visibility.
-- ✉️ <a target="_blank" href="https://newsletter.devopsroadmap.io/subscribe">Subscribe to the newsletter</a> for the project community activities, which include mentorship, job posting, online meetings, workshops, career tips and tricks, and more.
+- ✉️ <a target="_blank" href="https://newsletter.devopsroadmap.io/subscribe">Join the community</a> for the project community activities, which include mentorship, job posting, online meetings, workshops, career tips and tricks, and more.
 - 🌐 <a target="_blank" href="https://t.me/DevOpsHive/985">Join the Telegram group</a> for interactive communication.
 
 ## The Problem
@@ -98,7 +116,7 @@ This roadmap is `polymorphic`, which means it's designed to work in different mo
 
 <p align="center">
   <a href="https://devopsroadmap.io/getting-started/" imageanchor="1">
-    <img alt="Dynamic DevOps Roadmap Flow" border="0" width="90%" src="static/img/dynamic-devops-roadmap-flow.png" />
+    <img title="Dynamic DevOps Roadmap" alt="Dynamic DevOps Roadmap Modules" border="0" width="90%" src="static/img/dynamic-devops-roadmap-modules.png" />
   </a>
 </p>
 
@@ -114,4 +132,4 @@ This roadmap is `polymorphic`, which means it's designed to work in different mo
 
 ## License
 
-Dynamic DevOps Roadmap by [DevOps Hive](https://devopshive.net/) and under the open-source license, [Creative Commons  Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/). For more details, please review [LICENSE](LICENSE).
+Dynamic DevOps Roadmap by [DevOps Hive](https://devopshive.net/) and under the open-source license, [Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/). For more details, please review [LICENSE](LICENSE).

@@ -3,17 +3,40 @@ title: "Module 2: Basics - DevOps Core"
 sidebar_label: "2. Basics - DevOps Core"
 description: "Learn Python fundamentals, common development tools, and Git basics. Then, gain Linux essentials, common tools, and bash scripting skills. Also, cover Docker fundamentals — finally, a hands-on with the HiveBox project"
 image: /img/devops-core-preview.png
+toc_max_heading_level: 2
 ---
 
-[🗂 Back to the Roadmap Index](../../getting-started#roadmap-index)
+import {TargetAudience} from '@site/src/components/Audience';
+import ModuleHeader from '@site/src/components/ModuleHeader';
+import Quiz from '@site/src/components/Quiz';
+import QuizData from './module-02-quiz.json';
+
+<ModuleHeader />
 
 <p align="center">
-  <img alt="Module Overview" border="0" width="90%" src={require('./module-02-overview.png').default} />
+  <img class="module-overview-image" alt="Module Overview" border="0" width="90%"
+    src={require('./module-02-overview.png').default} />
 </p>
+
+## Module Overview
+
+- Learn Python fundamentals, common development tools, and Git basics.
+- Gain Linux essentials, common tools, and bash scripting skills.
+- Cover Docker and containers fundamentals.
+- Implement the progressive hands-on project, HiveBox phase 2.
+- Focus areas: Code (40%), Operating System (40%), Containers (20%).
 
 ## 2.1 Code - Python Fundamentals
 
+:::tip
+If you come from a development background, you can use any language you know. Python or Golang are still recommended.
+:::
+
 <img class="img-right" align="right" width="25%" src="/img/topics/code.png"></img>
+
+### Audience {#21-audience}
+
+<TargetAudience roles={['devops', 'software']} />
 
 ### What you need to know {#21-what-you-need-to-know}
 
@@ -30,9 +53,13 @@ image: /img/devops-core-preview.png
 
 ## 2.2 Code - Common Development Tools
 
+### Audience {#22-audience}
+
+<TargetAudience roles={['devops', 'software']} />
+
 ### What you need to know {#22-what-you-need-to-know}
 
-<img class="img-right" align="right" width="40%" src="/img/devops-loop.png"></img>
+<img title="DevOps Loop" alt="DevOps Loop" class="img-right" align="right" width="40%" src="/img/devops-loop.png"></img>
 
 - When you are writing code, you don't just use a text editor but code editor (maybe also IDE).
 - Development tools enhance productivity, streamline the development process, increase code quality.
@@ -47,6 +74,10 @@ image: /img/devops-core-preview.png
 
 
 ## 2.3 Code - Git Basics
+
+### Audience {#23-audience}
+
+<TargetAudience roles={['devops', 'software']} />
 
 ### What you need to know {#23-what-you-need-to-know}
 
@@ -65,6 +96,10 @@ image: /img/devops-core-preview.png
 
 <img class="img-right" align="right" width="25%" src="/img/topics/operating-system.png"></img>
 
+### Audience {#24-audience}
+
+<TargetAudience roles={['devops', 'software']} />
+
 ### What you need to know {#24-what-you-need-to-know}
 
 - In the servers world, Linux dominates the market. So it's necessary to learn and use Linux OS as a DevOps Engineer.
@@ -81,6 +116,10 @@ image: /img/devops-core-preview.png
 
 ## 2.5 Operating System - Common Tools and Commands
 
+### Audience {#25-audience}
+
+<TargetAudience roles={['devops', 'software']} />
+
 ### What you need to know {#25-what-you-need-to-know}
 
 - As mentioned, the terminal is your friend! The power of Linux is in the Terminal and you need to be used to it be because you will use it on a daily basis.
@@ -95,6 +134,10 @@ image: /img/devops-core-preview.png
 - [20 Linux commands every sysadmin should know - Opensource.com](https://opensource.com/article/17/7/20-sysadmin-commands): Another post about handy CLI tools.
 
 ## 2.6 Operating System - Bash Scripting Basics
+
+### Audience {#26-audience}
+
+<TargetAudience roles={['devops', 'software']} />
 
 ### What you need to know {#26-w6at-you-need-to-know}
 
@@ -114,6 +157,10 @@ image: /img/devops-core-preview.png
 
 <img class="img-right" align="right" width="25%" src="/img/topics/containers.png"></img>
 
+### Audience {#27-audience}
+
+<TargetAudience roles={['devops', 'software']} />
+
 ### What you need to know {#27-what-you-need-to-know}
 
 - The container revolution can be traced back to the introduction of Docker in 2013 when Docker debuted for the first time at PyCon.
@@ -125,7 +172,7 @@ image: /img/devops-core-preview.png
 - It's important to understand the difference between Dockerfile, Docker image, and Docker container.
 
 <p align="center">
-  <img alt="System, Containers, and Code" border="0" width="90%" src="/img/system-container-code.png"/>
+  <img title="System, Containers, and Code" alt="System, Containers, and Code" border="0" width="90%" src="/img/system-container-code.png"/>
 </p>
 
 ### Resources {#27-resources}
@@ -134,6 +181,10 @@ image: /img/devops-core-preview.png
 - [Learn Docker in 2 Hours - KodeKloud](https://www.youtube.com/watch?v=zJ6WbK9zFpI): A crash course covers a full overview of all the Docker fundamentals.
 
 ## 2.8 Containers - Docker CLI Basics
+
+### Audience {#28-audience}
+
+<TargetAudience roles={['devops', 'software']} />
 
 ### What you need to know {#28-what-you-need-to-know}
 
@@ -147,10 +198,14 @@ image: /img/devops-core-preview.png
 - [CLI Cheat Sheet - Docker Docs](https://docs.docker.com/get-started/docker_cheatsheet.pdf): One-page cheat sheet for Docker CLI commands.
 - [21 Essential Commands Every Docker User Should Know - Linux Handbook](https://linuxhandbook.com/essential-docker-commands/): Another good list of common Docker CLI commands.
 
-## Project - HiveBox Phase 2
+## Quiz
+
+<Quiz data={QuizData}/>
+
+## Hands-on
 
 Follow the instructions in the [HiveBox project phase 2](../../projects/hivebox#phase-2).
 
-## Interview Questions - Module 2
+## Interview Questions
 
 Review the interview questions related to [Module 2](../../interview/common-questions#module-2).
