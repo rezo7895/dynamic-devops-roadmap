@@ -67,7 +67,7 @@ def temperature_endpoint():
     Endpoint to return the average temperature based on all sensebox Data
     """
     current_time = time.time()
-    global last_upload 
+    global last_upload
     client = Minio(
         "minio:9000",
         access_key="miniouser",
