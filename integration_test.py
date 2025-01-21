@@ -33,10 +33,14 @@ def test_temperature_endpoint_in_case_no_caching(client):
     minio_client = 'app.Minio'
     open_function = 'builtins.open'
     os_remove = 'os.remove'
+    current_time = 'app.time.time'
+    last_upload = 'app.last_upload'
     with patch(connection) as mock_get, patch(redis_connection) as mock_r, \
-        patch(minio_client) as mock_minio, \
-        patch(open_function, mock_open()) as mock_file, \
-            patch(os_remove) as mock_os_remove:
+         patch(minio_client) as mock_minio, \
+         patch(open_function, mock_open()) as mock_file, \
+         patch(os_remove) as mock_os_remove, \
+         patch(current_time, return_value=300), \
+         patch(last_upload, 0):
         mock_get.return_value.json.return_value = [{"value": 20.0}]
         mock_r.get.return_value = None
         response = client.get('/temperature')
@@ -64,10 +68,14 @@ def test_temperature_endpoint_with_redis_caching(client):
     minio_client = 'app.Minio'
     open_function = 'builtins.open'
     os_remove = 'os.remove'
+    current_time = 'app.time.time'
+    last_upload = 'app.last_upload'
     with patch(connection) as mock_get, patch(redis_connection) as mock_r, \
-        patch(minio_client) as mock_minio, \
-        patch(open_function, mock_open()) as mock_file, \
-            patch(os_remove) as mock_os_remove:
+         patch(minio_client) as mock_minio, \
+         patch(open_function, mock_open()) as mock_file, \
+         patch(os_remove) as mock_os_remove, \
+         patch(current_time, return_value=300), \
+         patch(last_upload, 0):
         mock_get.return_value.json.return_value = [{
             "value": 20.0
         }]

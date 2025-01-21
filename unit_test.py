@@ -75,6 +75,8 @@ def test_temperature_success_with_redis_caching(client_fixture, mocker):
     mock_minio = mocker.patch('app.Minio')
     mock_file = mocker.patch('builtins.open', mock_open())
     mock_os_remove = mocker.patch('os.remove')
+    mocker.patch('app.time.time', return_value=300)
+    mocker.patch('app.last_upload', 0)
     mock_redis.get.return_value = '[{"value": 20.5}]'
     response = client_fixture.get('/temperature')
     data = json.loads(response.data)
@@ -128,6 +130,8 @@ def test_temperature_status(client_fixture, mocker):
     mock_file = mocker.patch('builtins.open', mock_open())
     mock_os_remove = mocker.patch('os.remove')
     mock_redis.get.return_value = None
+    mocker.patch('app.time.time', return_value=300)
+    mocker.patch('app.last_upload', 0)
     response = client_fixture.get('/temperature')
     data = json.loads(response.data)
     assert response.status_code == 200
