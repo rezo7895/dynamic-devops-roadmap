@@ -1,0 +1,14 @@
+---
+- name: Configure Jenkins Server
+  hosts: jenkins-ec2
+  become: true
+  vars_files:
+    - roles/prerequisites/vars/main.yml  
+  roles:
+    - prerequisites
+    - docker
+
+  tasks:
+    - name: Display SonarQube IP
+      debug:
+        msg: "SonarQube server: http://{{ ansible_host }}:9000"

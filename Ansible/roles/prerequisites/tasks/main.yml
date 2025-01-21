@@ -1,0 +1,127 @@
+---
+#__________________ Install prerequisites packages __________________#
+- name: Update and upgrade apt
+  apt:
+    update_cache: yes
+    upgrade: safe
+
+- name: Install prerequisites
+  apt:
+    name:
+      - wget
+      - apt-transport-https
+      - gnupg2
+      - software-properties-common
+      - unzip
+      - curl
+      - tar
+      - openjdk-11-jdk
+      - openjdk-11-jre
+    state: present
+    update_cache: yes
+
+#_________________________install SonarQube_________________________#
+- name: Ensure required packages are installed
+  apt:
+    name:
+      - unzip
+      - curl
+      - openjdk-11-jdk
+    state: present
+    update_cache: yes
+
+- name: Download SonarQube
+  get_url:
+    url: "{{ sonarqube_download_url }}"
+    dest: "/tmp/sonarqube-{{ sonarqube_version }}.zip"
+    mode: '0644'
+
+- name: Unzip SonarQube
+  unarchive:
+    src: "/tmp/sonarqube-{{ sonarqube_version }}.zip"
+    dest: "{{ sonarqube_install_dir }}"
+    remote_src: yes
+    creates: "{{ sonarqube_install_dir }}/sonarqube-{{ sonarqube_version }}"
+
+- name: Create a symlink for SonarQube
+  file:
+    src: "{{ sonarqube_install_dir }}/sonarqube-{{ sonarqube_version }}"
+    dest: "{{ sonarqube_install_dir }}/current"
+    state: link
+
+- name: Ensure SonarQube service is enabled and started
+  systemd:
+    name: sonarqube
+    enabled: yes
+    state: started
+    daemon_reload: yes
+
+- name: Create SonarQube systemd service file
+  template:
+    src: sonarqube.service.j2
+    dest: /etc/systemd/system/sonarqube.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Reload systemd
+
+- name: Ensure SonarQube service is running
+  service:
+    name: sonarqube
+    state: started
+    enabled: yes
+
+#__________________________ install kubectl to deploy in EKS Cluster _________#
+- name: Install kubernetes CLI (kubectl)
+  become: true
+  become_user: ubuntu
+  shell: |
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    chmod +x kubectl
+    sudo mv kubectl /usr/local/bin
+
+# configure cluster credentials (.kube/config) 
+- name: Update kubeconfig with EKS cluster credentials
+  become_user: ubuntu
+  command: aws eks update-kubeconfig --name {{ cluster_name }} --region {{ aws_region }}
+
+#______________________ install aws cli _____________________________________#
+
+- name: Install unzip package on Ubuntu
+  apt:
+    name: unzip
+    state: present
+
+- name: Download AWS CLI v2
+  shell: |
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o /tmp/awscliv2.zip
+  args:
+    creates: /tmp/awscliv2.zip
+
+- name: Unzip AWS CLI
+  shell: |
+    unzip /tmp/awscliv2.zip -d /tmp
+  args:
+    creates: /tmp/aws
+
+- name: Install AWS CLI
+  shell: |
+    /tmp/aws/install
+  args:
+    creates: /usr/local/bin/aws
+
+- name: Remove temporary files
+  file:
+    path: /tmp/awscliv2.zip
+    state: absent
+
+# configure AWS credentials ( .aws/credentials & .aws/config )
+- name: Configure AWS
+  shell: aws configure set {{ item.key }} {{ item.value }} --profile default
+  no_log: True 
+  with_dict:
+    aws_access_key_id: "{{ aws_access_key }}"
+    aws_secret_access_key: "{{ aws_secret_key }}"
+    region: "{{ aws_region }}"
+  become_user: ubuntu
+  changed_when: false

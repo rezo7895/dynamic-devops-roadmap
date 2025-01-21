@@ -18,3 +18,9 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/terraform/.terraform.lock.hcl
+/terraform/.terraform.tfstate.lock.info
+/terraform/.terraform/
+/terraform/ec2-ip.txt
+/terraform/terraform.tfstate
+/terraform/terraform.tfstate.backup
