@@ -48,7 +48,7 @@ jobs:
       with:
         args:
           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-          -Dsonar.branch.name=ali
+          # -Dsonar.branch.name=ali
     - name: Wait for Quality Gate result
       id: quality-gate
       run: |
