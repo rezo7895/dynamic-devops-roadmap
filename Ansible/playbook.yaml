@@ -7,8 +7,10 @@
   roles:
     - prerequisites
     - docker
+    - postgres
+    - sonarqube
 
   tasks:
-    - name: Display SonarQube IP
+    - name: Display sonarqube IP
       debug:
-        msg: "SonarQube server: http://{{ ansible_host }}:9000"
+        msg: "SonarQube server: http://{{ ansible_host }}:9000 , First time Login Credentials: (user: 'admin', password: 'admin')"

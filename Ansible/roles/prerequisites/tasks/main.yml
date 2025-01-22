@@ -15,62 +15,10 @@
       - unzip
       - curl
       - tar
-      - openjdk-11-jdk
-      - openjdk-11-jre
+      - openjdk-17-jdk
+      - openjdk-17-jre
     state: present
     update_cache: yes
-
-#_________________________install SonarQube_________________________#
-- name: Ensure required packages are installed
-  apt:
-    name:
-      - unzip
-      - curl
-      - openjdk-11-jdk
-    state: present
-    update_cache: yes
-
-- name: Download SonarQube
-  get_url:
-    url: "{{ sonarqube_download_url }}"
-    dest: "/tmp/sonarqube-{{ sonarqube_version }}.zip"
-    mode: '0644'
-
-- name: Unzip SonarQube
-  unarchive:
-    src: "/tmp/sonarqube-{{ sonarqube_version }}.zip"
-    dest: "{{ sonarqube_install_dir }}"
-    remote_src: yes
-    creates: "{{ sonarqube_install_dir }}/sonarqube-{{ sonarqube_version }}"
-
-- name: Create a symlink for SonarQube
-  file:
-    src: "{{ sonarqube_install_dir }}/sonarqube-{{ sonarqube_version }}"
-    dest: "{{ sonarqube_install_dir }}/current"
-    state: link
-
-- name: Ensure SonarQube service is enabled and started
-  systemd:
-    name: sonarqube
-    enabled: yes
-    state: started
-    daemon_reload: yes
-
-- name: Create SonarQube systemd service file
-  template:
-    src: sonarqube.service.j2
-    dest: /etc/systemd/system/sonarqube.service
-    owner: root
-    group: root
-    mode: '0644'
-  notify: Reload systemd
-
-- name: Ensure SonarQube service is running
-  service:
-    name: sonarqube
-    state: started
-    enabled: yes
-
 #__________________________ install kubectl to deploy in EKS Cluster _________#
 - name: Install kubernetes CLI (kubectl)
   become: true
@@ -81,9 +29,9 @@
     sudo mv kubectl /usr/local/bin
 
 # configure cluster credentials (.kube/config) 
-- name: Update kubeconfig with EKS cluster credentials
-  become_user: ubuntu
-  command: aws eks update-kubeconfig --name {{ cluster_name }} --region {{ aws_region }}
+#- name: Update kubeconfig with EKS cluster credentials
+#  become_user: ubuntu
+#  command: aws eks update-kubeconfig --name {{ cluster_name }} --region {{ aws_region }}
 
 #______________________ install aws cli _____________________________________#
 
@@ -116,12 +64,12 @@
     state: absent
 
 # configure AWS credentials ( .aws/credentials & .aws/config )
-- name: Configure AWS
-  shell: aws configure set {{ item.key }} {{ item.value }} --profile default
-  no_log: True 
-  with_dict:
-    aws_access_key_id: "{{ aws_access_key }}"
-    aws_secret_access_key: "{{ aws_secret_key }}"
-    region: "{{ aws_region }}"
-  become_user: ubuntu
-  changed_when: false
+#- name: Configure AWS
+#  shell: aws configure set {{ item.key }} {{ item.value }} --profile default
+#  no_log: True 
+#  with_dict:
+#    aws_access_key_id: "{{ aws_access_key }}"
+#    aws_secret_access_key: "{{ aws_secret_key }}"
+#    region: "{{ aws_region }}"
+#  become_user: ubuntu
+#  changed_when: false
