@@ -44,6 +44,9 @@ spec:
         ports:
         - containerPort: 5000
         - containerPort: 9090
+        - containerPort: 9000
+        - containerPort: 9001
+        - containerPort: 6379
         resources:
           requests:
             cpu: "100m"
@@ -66,11 +69,22 @@ spec:
       name: port1
       port: 80
       targetPort: 5000
-    # - protocol: TCP
-    #   name: port2
-    #   port: 9090
-    #   targetPort: 9090
-    #   nodePort: 30001
+    - protocol: TCP
+      name: port2
+      port: 9090
+      targetPort: 9090
+    - protocol: TCP
+      name: port3
+      port: 6379
+      targetPort: 6379
+    - protocol: TCP
+      name: port4
+      port: 9000
+      targetPort: 9000
+    - protocol: TCP
+      name: port5
+      port: 9001
+      targetPort: 9001
   type: LoadBalancer
 ---
 apiVersion: networking.k8s.io/v1

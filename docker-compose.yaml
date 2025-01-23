@@ -41,7 +41,7 @@ services:
       MINIO_ROOT_USER: miniouser
       MINIO_ROOT_PASSWORD: P@ssw0rd
     volumes:
-      - /c/Users/alyya/mino_data:/data
+      - ./mino_data:/data
 
 volumes:
   mino_data:
