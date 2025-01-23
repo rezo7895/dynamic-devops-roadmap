@@ -148,7 +148,7 @@ jobs:
       - name: Deploy application
         run: |
           kubectl get pods --all-namespaces
-          #kubectl apply -f k8s-manifests/deployment.yaml
+          kubectl apply -f k8s-manifests/deployment.yaml
 
 
 
