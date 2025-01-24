@@ -150,7 +150,6 @@ def test_store_endpoint(client_fixture, mocker):
     Test the store endpoint with for direct storing.
     """
     mock_response = {"Average_Temperature": 20.0, "Status": "Good"}
-    
     mocker.patch('app.requests.get', return_value=mocker.Mock(
                                 status_code=200, json=lambda: mock_response
                                 ))
@@ -170,4 +169,3 @@ def test_store_endpoint(client_fixture, mocker):
             "hivebox", "temperature_response.txt", "temperature_response.txt"
         )
     mock_os_remove.assert_called_once_with("temperature_response.txt")
-

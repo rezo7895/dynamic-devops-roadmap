@@ -104,7 +104,6 @@ def test_store_endpoint(client):
     minio_client = 'app.Minio'
     open_function = 'builtins.open'
     os_remove = 'os.remove'
-   
     with patch(connection) as mock_get, \
          patch(minio_client) as mock_minio, \
          patch(open_function, mock_open()) as mock_file, \

@@ -65,7 +65,6 @@ TEMPERATURE_STATUS_COUNT = Counter(
 )
 
 
-
 @app.route("/version", methods=["GET"])
 def version_endpoint():
     """
@@ -168,7 +167,7 @@ def store_endpoint():
     """
     url = url_for("temperature_endpoint", _external=True)
     response = requests.get(url)
-    result = response.json()    
+    result = response.json()
     client = Minio(
         "minio:9000",
         access_key="miniouser",
