@@ -143,3 +143,31 @@ def test_temperature_status(client_fixture, mocker):
         "hivebox", "temperature_response.txt", "temperature_response.txt"
         )
     mock_os_remove.assert_called_once_with("temperature_response.txt")
+
+
+def test_store_endpoint(client_fixture, mocker):
+    """
+    Test the store endpoint with for direct storing.
+    """
+    mock_response = {"Average_Temperature": 20.0, "Status": "Good"}
+    
+    mocker.patch('app.requests.get', return_value=mocker.Mock(
+                                status_code=200, json=lambda: mock_response
+                                ))
+    mock_minio = mocker.patch('app.Minio')
+    mock_file = mocker.patch('builtins.open', mock_open())
+    mock_os_remove = mocker.patch('os.remove')
+
+    response = client_fixture.get('/store')
+    data = json.loads(response.data)
+    assert response.status_code == 200
+    assert 'Average_Temperature' in data
+    assert float(data['Average_Temperature']) == 20
+    mock_file.assert_called_once_with("temperature_response.txt", "w")
+    mock_file().write.assert_called()
+    mock_minio.assert_called_once()
+    mock_minio.return_value.fput_object.assert_called_once_with(
+            "hivebox", "temperature_response.txt", "temperature_response.txt"
+        )
+    mock_os_remove.assert_called_once_with("temperature_response.txt")
+

@@ -96,6 +96,38 @@ def test_temperature_endpoint_with_redis_caching(client):
         mock_os_remove.assert_called_once_with("temperature_response.txt")
 
 
+def test_store_endpoint(client):
+    """
+    Test the store endpoint with for direct storing.
+    """
+    connection = 'requests.get'
+    minio_client = 'app.Minio'
+    open_function = 'builtins.open'
+    os_remove = 'os.remove'
+   
+    with patch(connection) as mock_get, \
+         patch(minio_client) as mock_minio, \
+         patch(open_function, mock_open()) as mock_file, \
+         patch(os_remove) as mock_os_remove:
+        mock_get.return_value.json.return_value = {
+            "Average_Temperature": 20.0, "Status": "Good"
+        }
+        response = client.get('/store')
+        assert response.status_code == 200
+        data = json.loads(response.data)
+        assert "Average_Temperature" in data
+        assert "Status" in data
+        assert float(data["Average_Temperature"]) == 20.0
+        assert data["Status"] == "Good"
+        mock_file.assert_called_once_with("temperature_response.txt", "w")
+        mock_file().write.assert_called()
+        mock_minio.assert_called_once()
+        mock_minio.return_value.fput_object.assert_called_once_with(
+            "hivebox", "temperature_response.txt", "temperature_response.txt"
+        )
+        mock_os_remove.assert_called_once_with("temperature_response.txt")
+
+
 def test_temperature_endpoint_failure(client):
     """
     Test the temperature endpoint for a failure scenario.
