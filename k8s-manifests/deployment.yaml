@@ -1,91 +1,244 @@
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: app-pv
-# spec:
-#   capacity:
-#     storage: 1Gi
-#   accessModes:
-#     - ReadWriteOnce
-#   hostPath:
-#     path: "/mnt/data"  
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: hivebox-storage
-# spec:
-#   accessModes:
-#     - ReadWriteOnce  
-#   resources:
-#     requests:
-#       storage: 1Gi  
-# ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hivebox-config
+data:
+  VALKEY_HOST: dmFsa2V5  
+  VALKEY_PORT: NjM3OQ==  
+  MINIO_ENDPOINT: bWluaW8=  
+  MINIO_ROOT_USER: bWluaW91c2Vy  
+  MINIO_ROOT_PASSWORD: UEBzc3cwcmQ=  
+  MINIO_BUCKET: aGl2ZWJveA==  
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: minio-secret
+type: Opaque
+data:
+  MINIO_ROOT_USER: bWluaW91c2Vy  
+  MINIO_ROOT_PASSWORD: UEBzc3cwcmQ= 
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-deployment
-  labels:
-    app: python
+  name: hivebox-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: python
+      app: hivebox-app
   template:
     metadata:
       labels:
-        app: python
+        app: hivebox-app
     spec:
-      automountServiceAccountToken: false
+      imagePullSecrets:
+        - name: docker-secret
       containers:
-      - name: python
-        image: ghcr.io/rezo7895/hivebox:1736335526
-        ports:
-        - containerPort: 5000
-        - containerPort: 9090
-        - containerPort: 9000
-        - containerPort: 9001
-        - containerPort: 6379
-        resources:
-          requests:
-            cpu: "100m"
-            memory: "128Mi"
-          limits:
-            cpu: "120m"
-            memory: "150Mi"
+        - name: hivebox-app
+          image: aliyasser98/hivebox:latest
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: hivebox-config
+            - secretRef:
+                name: minio-secret
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: app-service
-  labels:
-    app: python
+  name: hivebox-app
 spec:
   selector:
-    app: python
+    app: hivebox-app
   ports:
     - protocol: TCP
-      name: port1
-      port: 80
+      port: 5000
       targetPort: 5000
+      nodePort: 30000
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: valkey
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: valkey
+  template:
+    metadata:
+      labels:
+        app: valkey
+    spec:
+      containers:
+        - name: valkey
+          image: valkey/valkey:alpine
+          ports:
+            - containerPort: 6379
+          command: ["redis-server", "--bind", "0.0.0.0", "--protected-mode", "no"]
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: valkey
+spec:
+  selector:
+    app: valkey
+  ports:
     - protocol: TCP
-      name: port2
-      port: 9090
-      targetPort: 9090
-    - protocol: TCP
-      name: port3
       port: 6379
       targetPort: 6379
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      containers:
+        - name: minio
+          image: minio/minio
+          args: ["server", "/data", "--console-address", ":9001"]
+          ports:
+            - containerPort: 9000
+            - containerPort: 9001
+          envFrom:
+            - secretRef:
+                name: minio-secret
+          volumeMounts:
+            - name: minio-data
+              mountPath: /data
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "1000m"
+      volumes:
+        - name: minio-data
+          persistentVolumeClaim:
+            claimName: minio-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio
+spec:
+  selector:
+    app: minio
+  ports:
     - protocol: TCP
-      name: port4
       port: 9000
       targetPort: 9000
+      nodePort: 30001 
+      name: port1
     - protocol: TCP
-      name: port5
       port: 9001
       targetPort: 9001
-  type: LoadBalancer
+      nodePort: 30002 
+      name: port2
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      containers:
+        - name: prometheus
+          image: bitnami/prometheus:2.55.1
+          ports:
+            - containerPort: 9090
+          volumeMounts:
+            - name: prometheus-config
+              mountPath: /etc/prometheus/prometheus.yml
+              subPath: prometheus.yml
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "1000m"
+      volumes:
+        - name: prometheus-config
+          configMap:
+            name: prometheus-config
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: minio-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+    scrape_configs:
+      - job_name: 'hivebox-app'
+        static_configs:
+          - targets: ['hivebox-app:5000']
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+spec:
+  selector:
+    app: prometheus
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 9090
+      nodePort: 30003
+  type: NodePort
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -102,21 +255,27 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: app-service
+            name: hivebox-app
             port:
-              number: 80
+              number: 5000
       - path: /temperature
         pathType: Prefix
         backend:
           service:
-            name: app-service
+            name: hivebox-app
             port:
-              number: 80
+              number: 5000
+      - path: /store
+        pathType: Prefix
+        backend:
+          service:
+            name: hivebox-app
+            port:
+              number: 5000
       - path: /metrics
         pathType: Prefix
         backend:
           service:
-            name: app-service
+            name: hivebox-app
             port:
-              number: 80
-
+              number: 5000

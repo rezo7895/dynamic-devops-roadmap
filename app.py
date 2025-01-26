@@ -10,7 +10,7 @@ import json
 import requests
 import valkey
 from minio import Minio
-from flask import Flask, jsonify, url_for
+from flask import Flask, jsonify
 from prometheus_client import Counter, Histogram, make_wsgi_app
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
@@ -165,9 +165,7 @@ def store_endpoint():
     """
     Endpoint to call temperature endpoint and store the result in MinIO direct
     """
-    url = url_for("temperature_endpoint", _external=True)
-    response = requests.get(url)
-    result = response.json()
+    result = temperature_endpoint().get_json()
     client = Minio(
         "minio:9000",
         access_key="miniouser",
@@ -181,8 +179,10 @@ def store_endpoint():
             json.dump(result, f)
         client.fput_object(bucket_name, destination_file, destination_file)
         os.remove(destination_file)
+        UPLOAD_COUNT.labels(status="success").inc()
     except Exception as e:
         print(f"Error uploading data to MinIO: {e}")
+        UPLOAD_COUNT.labels(status="failure").inc()
     return jsonify(result)
 
 

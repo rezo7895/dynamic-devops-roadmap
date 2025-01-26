@@ -5,5 +5,5 @@ WORKDIR /app
 COPY ./app.py ./requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
 #USER miniouser
-EXPOSE 5000
+EXPOSE 5000 
 CMD [ "python","app.py" ]
