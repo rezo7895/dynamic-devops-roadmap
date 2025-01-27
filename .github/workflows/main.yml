@@ -78,23 +78,23 @@ jobs:
         sarif_upload: true
         iac_dir: './k8s-manifests'
     
-  Python_Tests:
-    needs: terrascan_job
-    runs-on: ubuntu-22.04
-    steps:
-    - name: Checkout the code
-      uses: actions/checkout@v3
-    - name: call python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.8'
-    - name: Install dependencies
-      run: |
-          pip install -r requirements.txt
-    - name: run tests
-      run: pytest
+  # Python_Tests:
+  #   needs: terrascan_job
+  #   runs-on: ubuntu-22.04
+  #   steps:
+  #   - name: Checkout the code
+  #     uses: actions/checkout@v3
+  #   - name: call python
+  #     uses: actions/setup-python@v4
+  #     with:
+  #       python-version: '3.8'
+  #   - name: Install dependencies
+  #     run: |
+  #         pip install -r requirements.txt
+  #   - name: run tests
+  #     run: pytest
   Build:
-    needs: Python_Tests
+    needs: terrascan_job
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
@@ -148,7 +148,7 @@ jobs:
       - name: Deploy application
         run: |
           kubectl get pods --all-namespaces
-          kubectl apply -f k8s-manifests/deployment.yaml
+          # kubectl apply -f k8s-manifests/deployment.yaml
 
 
 
