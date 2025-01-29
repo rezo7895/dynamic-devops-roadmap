@@ -1,4 +1,4 @@
-# node group
+# Use the Launch Template in the EKS Node Group
 resource "aws_eks_node_group" "worker_nodes" {
   cluster_name    = aws_eks_cluster.eks_cluster.id
   node_group_name = "osama_node"
@@ -7,12 +7,14 @@ resource "aws_eks_node_group" "worker_nodes" {
   capacity_type   = "ON_DEMAND"
   disk_size       = "20"
   ami_type        = "AL2_x86_64"
-  instance_types  = ["t3.micro"]
+  instance_types  = ["t3.medium"]  # Upgraded instance type
+
   scaling_config {
-    desired_size = 2
-    max_size     = 2
-    min_size     = 2
+    desired_size = 3  # Ensure 3 worker nodes are available
+    max_size     = 3
+    min_size     = 3
   }
+
   update_config {
     max_unavailable = 1
   }
@@ -22,6 +24,7 @@ resource "aws_eks_node_group" "worker_nodes" {
     aws_iam_role_policy_attachment.eks-AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.eks-AmazonEC2ContainerRegistryReadOnly,
   ]
+
   tags = {
     Name = "worker-Node"
   }
@@ -44,7 +47,7 @@ resource "aws_iam_role" "eks_nodegroup_role" {
   })
 }
 
-# Associate IAM policies to nodegroup Role 
+# Associate IAM policies to nodegroup Role
 resource "aws_iam_role_policy_attachment" "eks-AmazonEKSWorkerNodePolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
   role       = aws_iam_role.eks_nodegroup_role.name
