@@ -160,6 +160,62 @@ def temperature_endpoint():
     return jsonify(result)
 
 
+@app.route("/readyz", methods=["GET"])
+def readyz_endpoint():
+    """
+    Endpoint to return the readiness status.
+    Returns 200 unless valkey caching content older than 300 seconds and more
+    than 50% of configured sensebox IDs are not accessible.
+    """
+    from_date = current_timezone_utc()
+    base_url = "https://api.opensensemap.org/boxes/data"
+    temperature = {}
+    sensebox_ids = os.getenv(
+        "SENSEBOX_IDS",
+        (
+            "5c21ff8f919bf8001adf2488, "
+            "5eb99cacd46fb8001b2ce04c, "
+            "5e60cf5557703e001bdae7f8"
+        )
+    ).split(",")
+    accessible_count = 0
+    for i in sensebox_ids:
+        cached_data = r.get(f"temperature:{i}")
+        if cached_data:
+            temperature[i] = json.loads(cached_data)
+        else:
+            params = {
+                "boxId": i,
+                "phenomenon": "Temperatur",
+                "from-date": from_date,
+                "format": "json"
+            }
+            response = requests.get(base_url, params=params, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+            temperature[i] = data
+            r.set(f"temperature:{i}", json.dumps(data), ex=300)
+            accessible_count += 1
+            if accessible_count < (len(sensebox_ids) / 2) + 1:
+                return jsonify(
+                    {
+                     "status": (
+                                "50% + 1 of the senseBoxes are not accessible "
+                                "and caching content is older than 5 minutes."
+                         )
+                    }
+                        ), 503
+            if (
+                time.time() - float(
+                    r.get(f"temperature:{i}:timestamp")
+                    )
+                    ) > 300:
+                return jsonify(
+                    {"stauts": "AND caching content is older than 5 min."}
+                    ), 503
+    return jsonify({"status": "ready"}), 200
+
+
 @app.route("/store", methods=["GET"])
 def store_endpoint():
     """
